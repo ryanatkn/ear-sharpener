@@ -25,6 +25,7 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 - expose game variables in the ui so the player can configure things to their liking
 - let the player lock the current difficulty level
 - more game types? variations of existing games?
+- display audio load failures to the player instead of an unending loading animation
 - ...? [share](https://github.com/ryanatkn/ear-sharpener/issues) your ideas!
 
 ## Develop

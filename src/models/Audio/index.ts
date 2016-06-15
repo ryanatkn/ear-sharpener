@@ -180,7 +180,8 @@ function playAudio(url: string, volume: number = 1.0): void {
  * Creates a full audio url from a file name. Only implemented for piano notes.
  */
 function getAudioUrl(fileName: string): string {
-  return `./static/audio/notes/${fileName}`;
+  // quick hack for gh-pages - right now these are the only assets loaded outside of `index.html`
+  return `${__PROD__ ? '/ear-sharpener' : ''}/static/audio/notes/${fileName}`;
 }
 
 /**
