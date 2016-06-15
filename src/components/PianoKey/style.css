@@ -1,0 +1,58 @@
+@import '../../styles/_vars';
+@import '../../styles/_mixins';
+
+$white-key-color: #fff;
+$black-key-color: #333;
+
+.piano-key {
+  position: absolute;
+  top: 0;
+  border-left: 1px solid $border-color;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+  cursor: pointer;
+
+  &:last-child {
+    border-right: 1px solid $border-color;
+  }
+
+  &:hover {
+    background-color: $primary-color;
+  }
+
+  &:active {
+    background-color: $primary-color-dark;
+  }
+
+  &.piano-key--incorrect {
+    @mixin fading-overlay $error-color;
+  }
+
+  &.piano-key--correct {
+    @mixin fading-overlay $success-color;
+  }
+}
+
+.piano-key--white {
+  background-color: $white-key-color;
+  z-index: 1;
+}
+
+.piano-key--black {
+  background-color: $black-key-color;
+  z-index: 2;
+}
+
+.piano-key--disabled {
+  cursor: default;
+
+  &:hover, &:active {
+    &.piano-key--white {
+      background-color: $white-key-color;
+    }
+
+    &.piano-key--black {
+      background-color: $black-key-color;
+    }
+  }
+}

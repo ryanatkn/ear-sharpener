@@ -1,0 +1,39 @@
+@define-mixin fading-overlay $bg-color {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $bg-color;
+    opacity: 0;
+    animation-name: hanging-fade-out;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+  }
+}
+
+@define-mixin clickable-bg $bg-color-1, $bg-color-2 {
+  background-color: $bg-color-1;
+
+  &:hover {
+    background-color: color($bg-color-1 blend($bg-color-2 15%));
+  }
+
+  &:active {
+    background-color: color($bg-color-1 blend($bg-color-2 30%));
+  }
+}
+
+@define-mixin clickable-text $text-color-1, $text-color-2 {
+  background-color: $text-color-1;
+
+  &:hover {
+    background-color: color($text-color-1 blend($text-color-2 15%));
+  }
+
+  &:active {
+    background-color: color($text-color-1 blend($text-color-2 30%));
+  }
+}

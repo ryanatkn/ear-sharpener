@@ -1,0 +1,56 @@
+@import '../../styles/_vars';
+@import '../../styles/_mixins';
+
+.note-name-choice {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1;
+  font-size: 24px;
+  background-color: $primary-color;
+  color: #fff;
+  text-shadow: 0px 1px 2px $primary-color-darker;
+  cursor: pointer;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  user-select: none;
+
+  &:last-child {
+    border-right: 1px solid #ddd;
+  }
+
+  &:hover {
+    background-color: $primary-color-dark;
+  }
+
+  &:active {
+    background-color: $primary-color-darker;
+  }
+}
+
+.note-name-choice--incorrect {
+  @mixin fading-overlay $error-color;
+}
+
+.note-name-choice--correct {
+  @mixin fading-overlay $success-color;
+}
+
+.note-name-choice-text {
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.note-name-choice--disabled {
+  cursor: default;
+
+  &:hover, &:active {
+    background-color: $primary-color;
+  }
+}

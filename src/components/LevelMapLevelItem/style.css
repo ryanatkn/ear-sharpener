@@ -1,0 +1,43 @@
+@import '../../styles/_vars';
+
+.level-map-level-item {
+  width: 40px;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:hover {
+    background-color: $accent-color-dark;
+  }
+
+  &:active {
+    background-color: $accent-color-darker;
+  }
+
+  &:last-child {
+    border-right: 1px solid #ddd;
+  }
+}
+
+.level-map-level {
+  &:first-child {
+    .level-map-level-item {
+      border-top: 0;
+    }
+  }
+
+  &:last-child {
+    .level-map-level-item {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}
+
+.level-map-level-item--complete {
+  background-color: $accent-color-light;
+}
+
+.level-map-level-item--selected {
+  background-color: $accent-color;
+}

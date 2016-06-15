@@ -1,0 +1,6 @@
+@import '../../styles/_vars';
+
+.loading-indicator {
+  color: $primary-color-text;
+  text-shadow: -1px -1px 0 $primary-color-dark;
+}

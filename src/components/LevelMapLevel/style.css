@@ -1,0 +1,6 @@
+.level-map-level {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  max-height: 40px;
+}
