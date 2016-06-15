@@ -76,13 +76,13 @@ export function setDifficulty(
   };
 }
 
-export class GuessAction {
-  static type = 'guess';
+export class GuessingAction {
+  static type = 'guessing';
   payload: {gameName: GameName, guess: GameGuess};
 }
 
-const _guess = createAction(
-  GuessAction,
+const guessing = createAction(
+  GuessingAction,
   (gameName: GameName, guess: GameGuess) => ({payload: {gameName, guess}})
 );
 
@@ -108,7 +108,7 @@ export function guess(
   onComplete: typeof onGuessComplete = onGuessComplete
 ): Thunk<Promise<void>> {
   return (dispatch: Dispatch, getState: GetState): Promise<void> => {
-    dispatch(_guess(gameName, guess));
+    dispatch(guessing(gameName, guess));
     // Allow callers to provide their own post-guess delay,
     // but include a default that defers to the specific game's logic.
     const updatedGameState = getGameState(getState().games, gameName);
