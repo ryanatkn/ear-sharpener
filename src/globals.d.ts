@@ -18,6 +18,7 @@ declare var __TEST__: boolean;
 
 interface Window {
   devToolsExtension?: () => Redux.Middleware;
+  ga?: Function;
 }
 
 interface Dict<T> {
