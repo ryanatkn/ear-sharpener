@@ -180,7 +180,7 @@ function playAudio(url: string, volume: number = 1.0): void {
  * Creates a full audio url from a file name. Only implemented for piano notes.
  */
 function getAudioUrl(fileName: string): string {
-  return `/static/audio/notes/${fileName}`;
+  return `./static/audio/notes/${fileName}`;
 }
 
 /**
