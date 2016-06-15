@@ -5,12 +5,21 @@ const VOLUME_FOR_ONE_NOTE = 0.9; // default volume to play individual notes
 const VOLUME_FOR_MULTIPLE_NOTES = 0.25; // default volume to play many notes at once
 const RAND_DELAY_MIN = 350; // minimum delay when randomized
 const RAND_DELAY_MAX = 1000; // maximum delay when randomized
+const DEFAULT_AUDIO_CACHE_KEY = 'defaultAudioCacheKey';
 
 /**
  * Plays a single note at the given volume.
+ * An optional `cacheKey` can be provided to allow
+ * multiples of the same notes to play at the same time.
+ * This is helpful to avoid conflicts like when playing a piano
+ * key and it interrupting the currently playing note that was presented by a game.
  */
-export function playNote(note: Note, volume: number = VOLUME_FOR_ONE_NOTE): void {
-  playAudio(getAudioUrl(getFileNameForNote(note)), volume);
+export function playNote(
+  note: Note,
+  volume: number = VOLUME_FOR_ONE_NOTE,
+  cacheKey: string = DEFAULT_AUDIO_CACHE_KEY
+): void {
+  playAudio(getAudioUrl(getFileNameForNote(note)), volume, cacheKey);
 }
 
 /**
@@ -18,9 +27,13 @@ export function playNote(note: Note, volume: number = VOLUME_FOR_ONE_NOTE): void
  * For example, if `C` is given, plays C1-8 all at the same time.
  * Uses a lower volume by default because playing a bunch of notes at once is super loud.
  */
-export function playNoteName(noteName: NoteName, volume: number = VOLUME_FOR_MULTIPLE_NOTES): void {
+export function playNoteName(
+  noteName: NoteName,
+  volume: number = VOLUME_FOR_MULTIPLE_NOTES,
+  cacheKey: string = DEFAULT_AUDIO_CACHE_KEY
+): void {
   for (const fileName of getFileNamesForNoteName(noteName)) {
-    playAudio(getAudioUrl(fileName), volume);
+    playAudio(getAudioUrl(fileName), volume, cacheKey);
   }
 }
 
@@ -64,7 +77,7 @@ export function loadAllAudio(): Promise<void[]> {
  */
 function loadAudio(url: string): Promise<void> {
   return new Promiz((resolve: (value: void) => void): void => {
-    const audio = getAudio(url);
+    const audio = getAudio(url, DEFAULT_AUDIO_CACHE_KEY);
     // Quick hack for tests.
     if (__TEST__) {
       resolve(undefined);
@@ -151,23 +164,27 @@ function getFileNamesForNoteName(noteName: NoteName): string[] {
 /**
  * Audio objects are created once and cached in this global.
  */
-const audioCache: Dict<HTMLAudioElement> = {};
+const audioCaches: Dict<Dict<HTMLAudioElement>> = {};
 
 /**
  * Gets an audio object by url, pulling from the cache if available,
  * and creating and caching it if not.
  */
-function getAudio(url: string): HTMLAudioElement {
-  return audioCache[url]
-    || (audioCache[url] = createAudio(url));
+function getAudio(url: string, cacheKey: string): HTMLAudioElement {
+  const audioCache = audioCaches[cacheKey] || (audioCaches[cacheKey] = {});
+  return audioCache[url] || (audioCache[url] = createAudio(url));
 }
 
 /**
  * Plays audio `url` at `volume`.
  * If the audio is already playing, it restarts it from the beginning.
  */
-function playAudio(url: string, volume: number = 1.0): void {
-  const audio = getAudio(url);
+function playAudio(
+  url: string,
+  volume: number = 1.0,
+  cacheKey: string = DEFAULT_AUDIO_CACHE_KEY
+): void {
+  const audio = getAudio(url, cacheKey);
   audio.volume = volume;
   if (audio.paused) {
     audio.play();

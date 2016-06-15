@@ -44,7 +44,7 @@ export default class PianoGame extends React.Component<Props, {}> {
   }
 
   doGuess = (note: Note): void => {
-    playNote(note);
+    playNote(note, undefined, 'pianoFeedback');
     this.props.onGuess(note);
   };
 }
