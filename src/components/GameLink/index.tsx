@@ -35,7 +35,7 @@ export default class GameLink extends React.Component<Props, {}> {
   render(): JSX.Element {
     const {gameName} = this.props;
     return (
-      <Link to={getPath(gameName)} className="game-link">
+      <Link to={getPath(gameName)} className="game-link link-unstyled">
         {getGameNameTitle(gameName)}
       </Link>
     );

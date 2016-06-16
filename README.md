@@ -13,6 +13,7 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 - All non-container React components are pure and implement a shallow compare for `shouldComponentUpdate`, made possible by Redux and immutable app state.
 - There's a lot of complexity in the `gameActions` to get the desired UX. The four main sources of complexity include time-sequenced actions and side effects, disabling input when appropriate, canceling async audio that should no longer be played due to user input, and sequencing actions in the combo game differently than in standalone games. Overall it feels like there is some significant friction between Redux and the needs of this game.
 - Imperfect TypeScript integration:
+    - I wrote about my experience with TypeScript on this game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
     - Redux actions are type safe in reducers but the implementation comes with some tradeoffs - see `src/utils/actions/index.ts` for more.
     - lots of awkwardness around Immutable.js records - uses [these overrides](https://github.com/facebook/immutable-js/issues/341#issuecomment-147940378) to get more type safety, but type safety isn't possible when setting values
     - the game components have to specify all default props to allow the ToggleableGame component to use them generically

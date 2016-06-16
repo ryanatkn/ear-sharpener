@@ -1,6 +1,6 @@
 import {GameName} from '../../types';
 import {Action, isAction} from '../../utils/actions';
-import {GuessAction, GuessedAction, PresentingAction, PresentedAction,
+import {GuessingAction, GuessedAction, PresentingAction, PresentedAction,
   SetDifficultyAction} from '../../actions/gameActions';
 import * as Game from '../../models/Game';
 import * as I from 'immutable';
@@ -85,7 +85,7 @@ export default function games(state: State = getInitialState(), action: Action):
    * a guess is made on a game and before it completes.
    * Disables input if the guess was correct.
    */
-  } else if (isAction(action, GuessAction)) {
+  } else if (isAction(action, GuessingAction)) {
     const {gameName, guess} = action.payload;
     let newState = state
       .set('lastGameGuessed', gameName)

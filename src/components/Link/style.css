@@ -15,4 +15,5 @@ a {
 
 .link-unstyled {
   text-decoration: none;
+  outline: none;
 }

@@ -7,14 +7,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
   min-height: $nav-height;
   color: $text-color;
   padding: $spacing-xs $spacing-sm;
   color: $primary-color-text;
   text-shadow: 1px 1px 2px $primary-color-darker;
   border-radius: 3px 3px 0 0;
-  outline: 0;
 
   @mixin clickable-bg $primary-color, $bg-color;
 
