@@ -5,7 +5,8 @@
  * It isn't perfect but it has an acceptable set of tradeoffs.
  * The strangest part is that defining an action means creating a class that is never instantiated.
  * Not everything about this implementation is type safe, however.
- * For example the `actionFactory` function can return properties that exist on the `actionClass`.
+ * For example the `actionFactory` function can return properties
+ * that do not exist on the `actionClass`.
  *
  * Example:
  *
