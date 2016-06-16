@@ -17,8 +17,16 @@
  *    }
  *    const foo = createAction(FooAction, (bar: string) => ({payload: {bar}}));
  *
- *    // Usage
+ *    // Usage in components/actions
  *    dispatch(foo('barStr'));
+ *
+ *    // Usage in reducers
+ *    function myReducer(state: State, action: Action): State {
+ *      if (isAction(action, FooAction)) {
+ *        // TypeScript knows that `action` is a `FooAction` here.
+ *        // action.payload.bar => 'barString'
+ *      }
+ *    }
  */
 
 export interface ActionClass<TAction extends Action> {
