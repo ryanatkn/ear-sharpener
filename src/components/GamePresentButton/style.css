@@ -1,0 +1,15 @@
+@import '../../styles/_vars';
+@import '../../styles/_mixins';
+
+.game-present-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-base 0;
+  user-select: none;
+  @mixin clickable-play-button .game-present-button-icon, $primary-color, $accent-color, $accent-color-dark, $bg-color;
+
+  .game-present-button-icon {
+    margin-right: $spacing-sm;
+  }
+}

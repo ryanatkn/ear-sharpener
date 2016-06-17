@@ -12,6 +12,7 @@ describe('NoteDistanceGame', () => {
         isInputEnabled={true}
         onGuess={() => null}
         onSetDifficulty={() => null}
+        onPresent={() => null}
       />
     );
   });

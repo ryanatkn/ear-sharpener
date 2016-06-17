@@ -12,6 +12,7 @@ export interface IGameState<TGuess> {
   correctChoice: TGuess;
   lastGuess: TGuess; // each game type defines its own `TGuess` type with this generic param
   wasLastGuessCorrect: boolean;
+  presentCount: number; // tslint:disable-line:max-line-length // unfortunately this is not updated by the reducer, not the model, because in Redux we don't have side effects in the reducers or data transformations outside of them!
   guessCount: number;
   guessCountForCurrentCorrectChoice: number;
   shouldRefreshChoices: boolean;
@@ -61,6 +62,7 @@ export function init<T extends GameState<any>>(
   const gameWithDefaults = game.withMutations((g: T) => {
     g.set('lastGuess', null);
     g.set('wasLastGuessCorrect', null);
+    g.set('presentCount', 0);
     g.set('guessCount', 0);
     g.set('guessCountForCurrentCorrectChoice', 0);
     g.set('refreshChoicesCount', 0);
@@ -221,6 +223,7 @@ export function shouldAbortPresenting<TGuess, T extends GameState<TGuess>>(
   originalGameState: T,
   currentGameState: T
 ): boolean {
-  return originalGameState.guessCount !== currentGameState.guessCount
+  return originalGameState.presentCount !== currentGameState.presentCount
+    || originalGameState.guessCount !== currentGameState.guessCount
     || originalGameState.refreshCorrectChoiceCount !== currentGameState.refreshCorrectChoiceCount;
 }

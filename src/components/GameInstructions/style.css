@@ -1,7 +1,0 @@
-@import '../../styles/_vars';
-
-.game-instructions {
-  margin-bottom: $spacing-lg;
-  text-align: center;
-  padding: 0 $spacing-sm;
-}

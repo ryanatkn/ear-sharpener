@@ -4,7 +4,7 @@ import * as PianoGameModel from '../../models/PianoGame';
 import Piano from '../Piano';
 import LevelMap from '../LevelMap';
 import pureComponent from '../../utils/pureComponent';
-import GameInstructions from '../GameInstructions';
+import GamePresentButton from '../GamePresentButton';
 import {playNote} from '../../models/Audio';
 import {GameProps} from '../../types';
 
@@ -19,14 +19,17 @@ export default class PianoGame extends React.Component<Props, {}> {
     isInputEnabled: true,
     onGuess: null as any,
     onSetDifficulty: null as any,
+    onPresent: null as any,
   };
 
   render(): JSX.Element {
     const {gameState, isGuessIndicatorEnabled, isActive, isInputEnabled,
-      onSetDifficulty} = this.props;
+      onSetDifficulty, onPresent} = this.props;
     return (
       <div className="game">
-        <GameInstructions text="Play back the note."/>
+        <GamePresentButton isEnabled={isInputEnabled} onClick={onPresent}>
+          Play back the note.
+        </GamePresentButton>
         <Piano notes={gameState.choices}
           onPressKey={isInputEnabled ? this.doGuess : null}
           lastGuess={gameState.lastGuess} wasLastGuessCorrect={gameState.wasLastGuessCorrect}

@@ -12,6 +12,7 @@ describe('PianoGame', () => {
         isInputEnabled={true}
         onGuess={() => null}
         onSetDifficulty={() => null}
+        onPresent={() => null}
       />
     );
   });

@@ -47,8 +47,11 @@ export default function games(state: State = getInitialState(), action: Action):
     let newState = state.update(
       getGameStateKey(gameName),
       (game: Game.GameState<any>): Game.GameState<any> => {
+        // Increment a counter so we can determine if an async present is stale.
+        const newGame = game.set('presentCount', game.presentCount + 1);
+        // Perform a refresh. This can be a noop if no refresh is necessary or forced.
         const {refreshChoices, refreshCorrectChoice} = getGameModel(gameName);
-        return Game.refresh(game, refreshChoices, refreshCorrectChoice, forceRefresh);
+        return Game.refresh(newGame, refreshChoices, refreshCorrectChoice, forceRefresh);
       }
     ) as State;
     // Disable input when presenting a game state for the first time.

@@ -35,7 +35,7 @@ class App extends React.Component<Props, {}> {
   }
 }
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect((state: AppState): SelectedProps => ({
   isAudioLoaded: state.assetLoader.isAudioLoaded,
 }))(App);

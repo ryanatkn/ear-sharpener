@@ -30,7 +30,7 @@ class NoteDistanceGamePage extends React.Component<Props, {}> {
       <div className="page">
         <NoteDistanceGame gameState={gameState}
           isGuessIndicatorEnabled={isGuessIndicatorEnabled} isInputEnabled={isInputEnabled}
-          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty}
+          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty} onPresent={this.doPresent}
         />
       </div>
     );
@@ -43,9 +43,13 @@ class NoteDistanceGamePage extends React.Component<Props, {}> {
   doSetDifficulty = (level: number, step: number): void => {
     this.props.dispatch(gameActions.setDifficulty('note-distance-game', level, step));
   };
+
+  doPresent = (): void => {
+    this.props.dispatch(gameActions.present('note-distance-game'));
+  };
 }
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect((state: AppState): SelectedProps => ({
   gameState: state.games.noteDistanceGame,
   isGuessIndicatorEnabled: state.games.lastGameGuessed === 'note-distance-game',

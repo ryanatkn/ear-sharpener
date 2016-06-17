@@ -65,4 +65,5 @@ export interface GameProps<T extends GameState<TGuess>, TGuess> {
   isActive?: boolean;
   onGuess(guess: TGuess): void;
   onSetDifficulty(level: number, step: number): void;
+  onPresent(): void;
 }

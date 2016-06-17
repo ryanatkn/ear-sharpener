@@ -3,7 +3,6 @@
 .app-header {
   text-align: center;
   background-color: $primary-color;
-  margin-bottom: $spacing-lg;
 
   a {
     h1 {

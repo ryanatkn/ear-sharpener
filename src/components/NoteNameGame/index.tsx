@@ -4,7 +4,7 @@ import * as NoteNameGameModel from '../../models/NoteNameGame';
 import NoteNameChoices from '../NoteNameChoices';
 import LevelMap from '../LevelMap';
 import pureComponent from '../../utils/pureComponent';
-import GameInstructions from '../GameInstructions';
+import GamePresentButton from '../GamePresentButton';
 import {GameProps} from '../../types';
 
 interface Props extends GameProps<NoteNameGameModel.State, NoteName> {}
@@ -18,14 +18,17 @@ export default class NoteNameGame extends React.Component<Props, {}> {
     isInputEnabled: true,
     onGuess: null as any,
     onSetDifficulty: null as any,
+    onPresent: null as any,
   };
 
   render(): JSX.Element {
     const {gameState, isGuessIndicatorEnabled, isInputEnabled, onGuess,
-      onSetDifficulty} = this.props;
+      onSetDifficulty, onPresent} = this.props;
     return (
       <div className="game">
-        <GameInstructions text="Choose the name of the note."/>
+        <GamePresentButton isEnabled={isInputEnabled} onClick={onPresent}>
+          Choose the name of the note.
+        </GamePresentButton>
         <NoteNameChoices noteNameChoices={gameState.choices}
           onChooseNoteName={isInputEnabled ? onGuess : null}
           lastGuess={gameState.lastGuess} wasLastGuessCorrect={gameState.wasLastGuessCorrect}
