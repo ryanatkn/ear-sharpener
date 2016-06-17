@@ -57,6 +57,8 @@ export default function games(state: State = getInitialState(), action: Action):
     // Disable input when presenting a game state for the first time.
     // This permits the player to guess immediately after incorrect guesses
     // without waiting for the same state to be presented again.
+    // TODO unfortunately we introduced a subtle bug with the GamePresentButton here.
+    // The button gets disabled when clicked on the note distance game until it is presented.
     if (getGameState(newState, gameName).guessCountForCurrentCorrectChoice === 0) {
       newState = newState.set('isInputEnabled', false) as State;
     }
