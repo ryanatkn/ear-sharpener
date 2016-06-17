@@ -24,6 +24,16 @@ describe('gameActions', () => {
   });
 
   describe('present', () => {
+    it('should present a game and synchronously increment a counter', () => {
+      const initialPresentCount = 0;
+      assert.strictEqual(getGameState().presentCount, initialPresentCount);
+      const promise = store.dispatch(present(gameName));
+      assert.strictEqual(getGameState().presentCount, initialPresentCount + 1);
+      return promise.then(() => {
+        assert.strictEqual(getGameState().presentCount, initialPresentCount + 1);
+      });
+    });
+
     it('should present a game, disable input during the process, and enable it afterwards', () => {
       assert.strictEqual(store.getState().games.isInputEnabled, true);
       const promise = store.dispatch(present(gameName));

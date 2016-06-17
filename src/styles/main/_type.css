@@ -2,7 +2,7 @@
 
 .text-block {
   max-width: 500px;
-  margin: 0 auto;
+  margin: $spacing-lg auto 0;
   padding: 0 $spacing-base;
 }
 

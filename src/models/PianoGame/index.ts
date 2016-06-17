@@ -34,6 +34,7 @@ export const StateRecord = I.Record<IState>({
   correctChoice: undefined,
   lastGuess: undefined,
   wasLastGuessCorrect: undefined,
+  presentCount: undefined,
   guessCount: undefined,
   guessCountForCurrentCorrectChoice: undefined,
   shouldRefreshChoices: undefined,

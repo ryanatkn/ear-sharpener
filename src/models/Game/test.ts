@@ -24,6 +24,7 @@ describe('Game', () => {
     correctChoice: undefined,
     lastGuess: undefined,
     wasLastGuessCorrect: undefined,
+    presentCount: undefined,
     guessCount: undefined,
     guessCountForCurrentCorrectChoice: undefined,
     shouldRefreshChoices: undefined,
@@ -60,6 +61,7 @@ describe('Game', () => {
       assert.strictEqual(game.correctChoice, correctChoice);
       assert.strictEqual(game.lastGuess, null);
       assert.strictEqual(game.wasLastGuessCorrect, null);
+      assert.strictEqual(game.presentCount, 0);
       assert.strictEqual(game.guessCount, 0);
       assert.strictEqual(game.guessCountForCurrentCorrectChoice, 0);
       assert.strictEqual(game.shouldRefreshChoices, false);

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as NoteDistanceGameModel from '../../models/NoteDistanceGame';
 import NoteDistanceChoices from '../NoteDistanceChoices';
-import GameInstructions from '../GameInstructions';
+import GamePresentButton from '../GamePresentButton';
 import LevelMap from '../LevelMap';
 import pureComponent from '../../utils/pureComponent';
 import {GameProps} from '../../types';
@@ -17,14 +17,17 @@ export default class NoteDistanceGame extends React.Component<Props, {}> {
     isInputEnabled: true,
     onGuess: null as any,
     onSetDifficulty: null as any,
+    onPresent: null as any,
   };
 
   render(): JSX.Element {
     const {gameState, isGuessIndicatorEnabled, isInputEnabled, onGuess,
-      onSetDifficulty} = this.props;
+      onSetDifficulty, onPresent} = this.props;
     return (
       <div className="game">
-        <GameInstructions text="Choose the number of half-steps between the two notes."/>
+        <GamePresentButton isEnabled={isInputEnabled} onClick={onPresent}>
+          Choose the number of half-steps between the two notes.
+        </GamePresentButton>
         <NoteDistanceChoices distanceChoices={gameState.choices}
           onChooseNoteDistance={isInputEnabled ? onGuess : null}
           lastGuess={gameState.lastGuess} wasLastGuessCorrect={gameState.wasLastGuessCorrect}

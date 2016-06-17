@@ -30,5 +30,5 @@ const mapStateToProps = (state: AppState): SelectedProps => ({
   routerKeyRerenderHack: state.routing.locationBeforeTransitions.key,
 });
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect(mapStateToProps)(Link) as typeof Link;

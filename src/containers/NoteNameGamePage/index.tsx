@@ -31,7 +31,7 @@ class NoteNameGamePage extends React.Component<Props, {}> {
       <div className="page">
         <NoteNameGame gameState={gameState}
           isGuessIndicatorEnabled={isGuessIndicatorEnabled} isInputEnabled={isInputEnabled}
-          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty}
+          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty} onPresent={this.doPresent}
         />
       </div>
     );
@@ -44,9 +44,13 @@ class NoteNameGamePage extends React.Component<Props, {}> {
   doSetDifficulty = (level: number, step: number): void => {
     this.props.dispatch(gameActions.setDifficulty('note-name-game', level, step));
   };
+
+  doPresent = (): void => {
+    this.props.dispatch(gameActions.present('note-name-game'));
+  };
 }
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect((state: AppState): SelectedProps => ({
   gameState: state.games.noteNameGame,
   isGuessIndicatorEnabled: state.games.lastGameGuessed === 'note-name-game',

@@ -16,6 +16,7 @@ describe('ToggleableGame', () => {
         isInputEnabled={true}
         onGuess={() => null}
         onSetDifficulty={() => null}
+        onPresent={() => null}
       />
     );
     assert.equal(wrapper.find(NoteNameGame).length, 1, 'should render the game component');
@@ -32,6 +33,7 @@ describe('ToggleableGame', () => {
         isInputEnabled={true}
         onGuess={() => null}
         onSetDifficulty={() => null}
+        onPresent={() => null}
       />
     );
     assert.equal(wrapper.find(NoteNameGame).length, 1, 'should render the game component');
@@ -46,6 +48,7 @@ describe('ToggleableGame', () => {
       isActive: true,
       onGuess: (): void => null,
       onSetDifficulty: (): void => null,
+      onPresent: (): void => null,
     };
     const wrapper = shallow(
       <ToggleableGame

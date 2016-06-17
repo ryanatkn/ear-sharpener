@@ -41,7 +41,9 @@ class ComboGamePage extends React.Component<Props, {}> {
         gameState={getGameState(gameName, this.props)}
         isGuessIndicatorEnabled={isGuessIndicatorEnabled}
         isInputEnabled={isInputEnabled}
-        onGuess={this.onGuess} onSetDifficulty={this.doSetDifficulty}
+        onGuess={this.onGuess}
+        onSetDifficulty={this.doSetDifficulty}
+        onPresent={this.doPresent}
       />
     );
   }
@@ -63,9 +65,13 @@ class ComboGamePage extends React.Component<Props, {}> {
   doSetDifficulty = (level: number, step: number): void => {
     this.props.dispatch(gameActions.setDifficulty(this.props.activeGameName, level, step));
   };
+
+  doPresent = (): void => {
+    this.props.dispatch(gameActions.present(this.props.activeGameName));
+  };
 }
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect((state: AppState): SelectedProps => ({
   activeGameName: state.comboGame.activeGame,
   isGuessIndicatorEnabled: state.comboGame.activeGame === state.games.lastGameGuessed,

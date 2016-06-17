@@ -8,9 +8,7 @@
     height: 100%;
     background-color: $bg-color;
     opacity: 0;
-    animation-name: hanging-fade-out;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-in;
+    animation: hanging-fade-out 1.5s ease-in;
   }
 }
 
@@ -26,14 +24,48 @@
   }
 }
 
-@define-mixin clickable-text $text-color-1, $text-color-2 {
-  background-color: $text-color-1;
+@define-mixin clickable-play-button $selector, $color, $hover-color, $active-color, $bg-color {
+  cursor: pointer;
 
+  $selector {
+    position: relative;
+    background-color: $color;
+    border-radius: 50px;
+    height: 24px;
+    width: 24px;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 6px;
+      left: 9px;
+      border-style: solid;
+      border-color: transparent transparent transparent $bg-color;
+      border-width: 6px 6px 6px 10px;
+    }
+  }
+
+  /* The hover and active states apply to the container, not the targetted selector. */
   &:hover {
-    background-color: color($text-color-1 blend($text-color-2 15%));
+    $selector {
+      background-color: $hover-color;
+    }
   }
 
   &:active {
-    background-color: color($text-color-1 blend($text-color-2 30%));
+    $selector {
+      background-color: $active-color;
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+
+    &:hover, &:active {
+      $selector {
+        background-color: $color;
+      }
+    }
   }
 }

@@ -31,7 +31,7 @@ class PianoGamePage extends React.Component<Props, {}> {
       <div className="page">
         <PianoGame gameState={gameState}
           isGuessIndicatorEnabled={isGuessIndicatorEnabled} isInputEnabled={isInputEnabled}
-          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty}
+          onGuess={this.doGuess} onSetDifficulty={this.doSetDifficulty} onPresent={this.doPresent}
         />
       </div>
     );
@@ -44,9 +44,13 @@ class PianoGamePage extends React.Component<Props, {}> {
   doSetDifficulty = (level: number, step: number): void => {
     this.props.dispatch(gameActions.setDifficulty('piano-game', level, step));
   };
+
+  doPresent = (): void => {
+    this.props.dispatch(gameActions.present('piano-game'));
+  };
 }
 
-// TODO decorator type is broken atm
+// TODO Redux decorator type is broken atm
 export default connect((state: AppState): SelectedProps => ({
   gameState: state.games.pianoGame,
   isGuessIndicatorEnabled: state.games.lastGameGuessed === 'piano-game',
