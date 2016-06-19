@@ -2,6 +2,7 @@ import * as assign from 'lodash/assign';
 import {createStore, applyMiddleware, combineReducers, compose, Middleware} from 'redux';
 import {routerReducer} from 'react-router-redux';
 import reducers, {getInitialState} from '../../reducers';
+import actionIdMiddleware from '../../middleware/actionIdMiddleware';
 import logMiddleware from '../../middleware/logMiddleware';
 import thunk from 'redux-thunk';
 import {Store} from '../../types';
@@ -33,6 +34,7 @@ function getStoreEnhancers(): Function[] {
 function getMiddleware(): Middleware[] {
   return compact([
     thunk,
+    actionIdMiddleware(),
     __DEV__ ? logMiddleware() : null,
   ]);
 }

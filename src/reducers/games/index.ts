@@ -17,6 +17,7 @@ interface IState {
   // Other state
   lastGameGuessed: GameName;
   isInputEnabled: boolean;
+  inputDisabledActionId: number;
 }
 
 export type State = I.Record.IRecord<IState>;
@@ -27,12 +28,16 @@ const StateRecord = I.Record<IState>({
   pianoGame: PianoGame.create(),
   lastGameGuessed: null,
   isInputEnabled: true,
+  inputDisabledActionId: -1,
 });
 
 export function getInitialState(): State {
   return new StateRecord();
 }
 
+// TODO the formatting here gives me a headache, but using a switch is a bit worse because
+// variable names cannot be reused. Declaring all vars at the top could cause errors,
+// and fully qualifying everything off the action has its own readability problems.
 export default function games(state: State = getInitialState(), action: Action): State {
   /**
    * Handles the transformations that should happen when a game starts presenting.
@@ -54,23 +59,21 @@ export default function games(state: State = getInitialState(), action: Action):
     // Disable input when presenting a game state for the first time.
     // This permits the player to guess immediately after incorrect guesses
     // without waiting for the same state to be presented again.
-    // TODO unfortunately we introduced a subtle bug with the GamePresentButton here.
-    // The button gets disabled when clicked on the note distance game until it is presented.
+    // TODO unfortunately we introduced an undesirable UX quirk with the GamePresentButton here.
+    // The button is disabled when clicked for the note distance game until it finishes presenting.
+    // Ideally the user should be able to click the button rapidly without it being disabled.
     if (getGameState(newState, gameName).guessCountForCurrentCorrectChoice === 0) {
-      newState = newState.set('isInputEnabled', false) as State;
+      newState = disableInput(newState, action.meta.actionId);
     }
     return newState;
+
+  /**
+   * Handles the transformations that should happen when a game finishes presenting.
+   * Input may have been disabled when it started presenting, so re-enable it as necessary.
+   */
   } else if (action.type === 'presented') {
-    /**
-     * Handles the transformations that should happen when a game finishes presenting.
-     * Input may have been disabled when it started presenting, so re-enable it as necessary.
-     */
-    // TODO this should only enable it if it was disabled in the associated PresentingAction!
-    // However that requires some hacky workarounds, and it's a rare enough bug to ignore.
-    // One way to do it would be to track a unique id for each dispatched action which gets
-    // set on the state in `presenting` and is passed as a parameter into `presented`.
-    // Input would only be re-enabled here if the parameter id matched the id on the state.
-    return state.set('isInputEnabled', true) as State;
+    return enableInput(state, action.payload.presentingActionId);
+
   /**
    * Sets the difficulty (level and step) for a game.
    */
@@ -82,6 +85,7 @@ export default function games(state: State = getInitialState(), action: Action):
         return Game.clearLastGuess(Game.setDifficulty(game, level, step));
       }
     ) as State;
+
   /**
    * Handles the transformations that should happen when
    * a guess is made on a game and before it completes.
@@ -101,9 +105,10 @@ export default function games(state: State = getInitialState(), action: Action):
     // This permits the player to guess immediately after incorrect guesses
     // without waiting for the same state to be presented again.
     if (getGameState(newState, gameName).wasLastGuessCorrect) {
-      newState = newState.set('isInputEnabled', false) as State;
+      newState = disableInput(newState, action.meta.actionId);
     }
     return newState;
+
   /**
    * Handles the transformations that should happen when a guess is completed.
    * There is a delay between this and the `GuessAction` for some games
@@ -111,9 +116,11 @@ export default function games(state: State = getInitialState(), action: Action):
    * Re-enables input as necessary.
    */
   } else if (action.type === 'guessed') {
-    // TODO this should only enable it if it was disabled in the associated GuessAction!
-    // See the notes in the `PresentedAction` block above for a possible fix.
-    return state.set('isInputEnabled', true) as State;
+    return enableInput(state, action.payload.guessingActionId);
+
+  /**
+   * Unhandled action.
+   */
   } else {
     return state;
   }
@@ -148,4 +155,25 @@ export function getGameStateKey(gameName: GameName): string {
 
 export function getGameState(state: State, gameName: GameName): Game.GameState<any> {
   return state[getGameStateKey(gameName)];
+}
+
+/**
+ * Disables input on the state, tracking which action last disabled input so it can be
+ * re-enabled only when the associated followup action comes through.
+ */
+function disableInput(state: State, actionId: number): State {
+  return state
+    .set('isInputEnabled', false)
+    .set('inputDisabledActionId', actionId) as State;
+}
+
+/**
+ * Enables input on the state, but only if the last action to disable it is `actionId`.
+ * This prevents a bug where input can be enabled prematurely if multiple actions
+ * that disable it come through.
+ */
+function enableInput(state: State, actionId: number): State {
+  return state.inputDisabledActionId === actionId
+      ? state.set('isInputEnabled', true) as State
+      : state;
 }

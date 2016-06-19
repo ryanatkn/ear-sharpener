@@ -75,37 +75,45 @@ export interface GameProps<T extends GameState<TGuess>, TGuess> {
 export type Action = PresentingAction | PresentedAction | SetDifficultyAction
   | GuessingAction | GuessedAction | AudioLoadedAction | SetActiveGameAction;
 
-export interface PresentingAction {
+interface ReduxAction {
+  meta?: { // needs to be optional so actions don't have to define a meta property
+    // The `actionId` is added by middleware and uniquely identifies each action.
+    // Used to re-enable input with precision.
+    actionId: number;
+  };
+}
+
+export interface PresentingAction extends ReduxAction {
   type: 'presenting';
   payload: {gameName: GameName, forceRefresh: boolean};
 }
 
-export interface PresentedAction {
+export interface PresentedAction extends ReduxAction {
   type: 'presented';
-  payload: {gameName: GameName};
+  payload: {gameName: GameName, presentingActionId: number};
 }
 
-export interface SetDifficultyAction {
+export interface SetDifficultyAction extends ReduxAction {
   type: 'setDifficulty';
   payload: {gameName: GameName, level: number, step: number};
 }
 
-export interface GuessingAction {
+export interface GuessingAction extends ReduxAction {
   type: 'guessing';
   payload: {gameName: GameName, guess: GameGuess};
 }
 
-export interface GuessedAction {
+export interface GuessedAction extends ReduxAction {
   type: 'guessed';
-  payload: {gameName: GameName};
+  payload: {gameName: GameName, guessingActionId: number};
 }
 
-export interface AudioLoadedAction {
+export interface AudioLoadedAction extends ReduxAction {
   type: 'audioLoaded';
   payload?: undefined;
 }
 
-export interface SetActiveGameAction {
+export interface SetActiveGameAction extends ReduxAction {
   type: 'setActiveGame';
   payload: {gameName: GameName};
 }
