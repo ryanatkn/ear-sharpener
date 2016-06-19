@@ -12,10 +12,10 @@ function presenting(gameName: GameName, forceRefresh: boolean): PresentingAction
   };
 }
 
-function presented(gameName: GameName): PresentedAction {
+function presented(gameName: GameName, presentingActionId: number): PresentedAction {
   return {
     type: 'presented',
-    payload: {gameName},
+    payload: {gameName, presentingActionId},
   };
 }
 
@@ -28,7 +28,7 @@ function presented(gameName: GameName): PresentedAction {
  */
 export function present(gameName: GameName, forceRefresh: boolean = false): Thunk<Promise<void>> {
   return (dispatch: Dispatch, getState: GetState): Promise<void> => {
-    dispatch(presenting(gameName, forceRefresh));
+    const {meta: {actionId}} = dispatch(presenting(gameName, forceRefresh));
     // Presenting the game is just a side effect (playing sound), so it has no dispatched action.
     // I dislike how the action stream does not fully represent what's happening,
     // but I'm sticking with Redux best practices.
@@ -41,7 +41,7 @@ export function present(gameName: GameName, forceRefresh: boolean = false): Thun
       }
     )
       .then((): void => {
-        dispatch(presented(gameName));
+        dispatch(presented(gameName, actionId));
       });
   };
 }
@@ -74,10 +74,10 @@ function guessing(gameName: GameName, guess: GameGuess): GuessingAction {
   };
 }
 
-function guessed(gameName: GameName): GuessedAction {
+function guessed(gameName: GameName, guessingActionId: number): GuessedAction {
   return {
     type: 'guessed',
-    payload: {gameName},
+    payload: {gameName, guessingActionId},
   };
 }
 
@@ -93,7 +93,7 @@ export function guess(
   onComplete: typeof onGuessComplete = onGuessComplete
 ): Thunk<Promise<void>> {
   return (dispatch: Dispatch, getState: GetState): Promise<void> => {
-    dispatch(guessing(gameName, guess));
+    const {meta: {actionId}} = dispatch(guessing(gameName, guess));
     // Allow callers to provide their own post-guess delay,
     // but include a default that defers to the specific game's logic.
     const updatedGameState = getGameState(getState().games, gameName);
@@ -106,7 +106,7 @@ export function guess(
         if (currentGameState.guessCount !== updatedGameState.guessCount) {
           return undefined;
         }
-        dispatch(guessed(gameName));
+        dispatch(guessed(gameName, actionId));
         // Allow callers to provide their own completion logic,
         // but include a default that refreshes and presents the current game.
         return onComplete(wasCorrect, gameName, dispatch);
