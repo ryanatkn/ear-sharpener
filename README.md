@@ -13,9 +13,9 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 - Made with TypeScript, React, Redux, Immutable.js, React Router, PostCSS, Mocha, Chai, Sinon,
   Enzyme, Webpack, and the [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension).
 - Redux actions are type safe in reducers using the discriminated union types available in TypeScript nightly.
-  The actions are defined in `[src/types.ts](https://github.com/ryanatkn/ear-sharpener/blob/master/src/types.ts)`.
+  The actions are defined in [`src/types.ts`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/types.ts).
   The old ununsed hacky action implementation is in
-  `[src/utils/actions](https://github.com/ryanatkn/ear-sharpener/blob/master/src/utils/actions/index.ts)`.
+  [`src/utils/actions`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/utils/actions/index.ts).
 - Friction between Redux and the needs of this game:
     - There's a lot of complexity in the `gameActions` to get the desired UX.
       The four main sources of complexity include time-sequenced actions and side effects,
