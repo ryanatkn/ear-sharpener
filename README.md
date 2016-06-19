@@ -34,11 +34,12 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
     - lots of awkwardness around Immutable.js records -
       uses [these overrides](https://github.com/facebook/immutable-js/issues/341#issuecomment-147940378)
       to get more type safety, but type safety isn't possible when setting values
-    - the game components have to specify all default props to allow the ToggleableGame component to use them generically -
+    - the game components have to specify all default props to allow the ComboGamePage component to use them generically -
       [this issue](https://github.com/Microsoft/TypeScript/issues/3960) has a fix
-- There's some awkwardness at the boundary between Immutable.js and plain JS objects/arrays.
-  The app state is represented fully with Immutable.js data structures and primitives,
-but many supporting model functions use plain JS arrays/objects because Immutable.js collections are unwieldy.
+- There's a boundary between Immutable.js and plain JS objects/arrays in the models
+  before the heavier data transformations.
+  The app state is represented fully with Immutable.js data structures,
+  but many supporting model functions use plain JS arrays/objects because Immutable.js collections are unwieldy.
 - The idea of the UI being a pure projection of state is somewhat at odds with event-triggered
   time-dependent effects like the feedback animations after guesses.
   This lead to some strange workarounds like tracking action counters in the game state
