@@ -1,4 +1,10 @@
 /**
+ * NOTE: This file is no longer being used. It is only being kept for posterity.
+ * See `src/types.ts` for the new Action implementation that uses the discriminated union
+ * types that just got added to the TypeScript nightly as of 6/18/2016.
+ */
+
+/**
  * Typed Redux action implementation taken from Github user @Cooke
  * at https://github.com/reactjs/redux/issues/992#issuecomment-213898898
  * The primary benefit is that our reducers have type safety with the actions they handle.

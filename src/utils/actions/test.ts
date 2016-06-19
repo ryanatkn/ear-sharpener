@@ -3,6 +3,12 @@ import {createAction, isAction, Action} from './index';
 
 // tslint:disable:max-line-length
 
+/**
+ * NOTE: This file is no longer being used. It is only being kept for posterity.
+ * See `src/types.ts` for the new Action implementation that uses the discriminated union
+ * types that just got added to the TypeScript nightly as of 6/18/2016.
+ */
+
 describe('actions', () => {
   describe('createAction', () => {
     it('should create an action that returns the expected action data', () => {

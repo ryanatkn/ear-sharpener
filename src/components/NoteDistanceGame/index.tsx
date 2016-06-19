@@ -26,7 +26,7 @@ export default class NoteDistanceGame extends React.Component<Props, {}> {
     return (
       <div className="game">
         <GamePresentButton isEnabled={isInputEnabled} onClick={onPresent}>
-          Choose the number of half-steps between the two notes.
+          Choose the number of semitones between the two notes.
         </GamePresentButton>
         <NoteDistanceChoices distanceChoices={gameState.choices}
           onChooseNoteDistance={isInputEnabled ? onGuess : null}

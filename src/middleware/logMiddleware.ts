@@ -1,5 +1,5 @@
 import {Middleware} from 'redux';
-import {Action} from '../utils/actions';
+import {Action} from '../types';
 
 export default (): Middleware => {
   return () => (next: Function) => (action: Action) => {

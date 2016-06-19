@@ -9,7 +9,7 @@ import {assert} from 'chai';
 describe('games reducer', () => {
   it('should return the same state object from an unhandled action', () => {
     const state = getInitialState();
-    const newState = games(state, {type: '__UNHANDLED_TEST_ACTION__'});
+    const newState = games(state, {type: '__UNHANDLED_TEST_ACTION__'} as any);
     assert.strictEqual(state, newState);
   });
 });

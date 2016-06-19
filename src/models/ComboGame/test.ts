@@ -8,7 +8,7 @@ describe('ComboGame', () => {
     it('should get the next game in a circular loop', () => {
       const countsPerGame: Dict<number> = {};
       const firstGameName: GameName = 'piano-game';
-      let currentGameName = firstGameName;
+      let currentGameName: GameName = firstGameName;
       let loopCount = 0;
       while (true) {
         currentGameName = getNextGame(currentGameName);
