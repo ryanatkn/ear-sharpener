@@ -11,12 +11,12 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 ## Tech notes
 - Made with TypeScript, React, Redux, Immutable.js, React Router, PostCSS, Mocha, Chai, Sinon, Enzyme, Webpack, and the [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension).
 - All non-container React components are pure and implement a shallow compare for `shouldComponentUpdate`, made possible by Redux and immutable app state.
+- Redux actions are type safe in reducers using discriminated union types (added in TypeScript nightly on 6/18/16). The actions are defined in `src/types.ts`. The old ununsed hacky action implementation can be seen in `src/utils/actions/index.ts`. The new implementation is quite nice with one minor exception - the reducers use if guards rather than switches because switch cases do not introduce a new block scope, which means const variable names cannot be reused.
 - Friction between Redux and the needs of this game:
     - There's a lot of complexity in the `gameActions` to get the desired UX. The four main sources of complexity include time-sequenced actions and side effects, disabling input when appropriate, canceling async audio that should no longer be played due to user input, and sequencing actions in the combo game differently than in standalone games.
     - Because Redux reducers should be pure, presenting a game (playing its audio) is not performed in reducers. However presenting also requires data transformations, so the `PresentingAction` and `PresentedAction` create the new states. Doing this unfortunately fragments some of the logic. For example, it would follow the rest of the app's conventions that `present(game)` increments the `presentCounter`, but now they are separate code paths. This design means that errors may occur if we present the game and do not fire the corresponding action or vice versa, and it's more verbose.
 - Imperfect TypeScript integration:
     - I wrote about my experience with TypeScript on this game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
-    - Redux actions are type safe in reducers but the implementation comes with some tradeoffs - see `src/utils/actions/index.ts` for more.
     - lots of awkwardness around Immutable.js records - uses [these overrides](https://github.com/facebook/immutable-js/issues/341#issuecomment-147940378) to get more type safety, but type safety isn't possible when setting values
     - the game components have to specify all default props to allow the ToggleableGame component to use them generically
 - There's some awkwardness at the boundary between Immutable.js and plain JS objects/arrays. The app state is represented fully with Immutable.js data structures and primitives, but many supporting model functions use plain JS arrays/objects because Immutable.js collections are unwieldy.
@@ -33,7 +33,6 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 - ...? [share](https://github.com/ryanatkn/ear-sharpener/issues) your ideas!
 
 ## Develop
-Requires Node (tested with v5/6).
 
     npm install
     npm install -g tsd

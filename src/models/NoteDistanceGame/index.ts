@@ -7,7 +7,7 @@ import * as sample from 'lodash/sample';
 import * as range from 'lodash/range';
 
 /**
- * The NoteDistanceGame has the player guess the number of half-steps between two notes.
+ * The NoteDistanceGame has the player guess the number of semitones between two notes.
  * For example, if notes `A4` and then `B4` play, the player must guess `2`.
  */
 export type Guess = number;
@@ -62,7 +62,7 @@ let presentInReverseOrder = false;
 
 /**
  * Presents the current state of the game to the player,
- * playing the two notes that the player must guess the half-step distance between.
+ * playing the two notes that the player must guess the semitone distance between.
  */
 export function present(game: State, shouldAbort: () => boolean): Promise<number> {
   const notesToPlay = [game.currentNote1, game.currentNote2];

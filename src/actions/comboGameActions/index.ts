@@ -1,20 +1,16 @@
 import {Thunk} from '../../types';
 import {Dispatch} from 'redux';
-import {GameName, GameGuess} from '../../types';
+import {GameName, GameGuess, SetActiveGameAction} from '../../types';
 import * as gameActions from '../gameActions';
 import {getNextGame, pauseTimeBetweenGames} from '../../models/ComboGame';
-import {createAction} from '../../utils/actions';
 import {getGameModel} from '../../reducers/games';
 
-export class SetActiveGameAction {
-  static type = 'setActiveGame';
-  payload: {gameName: GameName};
+export function setActiveGame(gameName: GameName): SetActiveGameAction {
+  return {
+    type: 'setActiveGame',
+    payload: {gameName},
+  };
 }
-
-export const setActiveGame = createAction(
-  SetActiveGameAction,
-  (gameName: GameName) => ({payload: {gameName}})
-);
 
 /**
  * Makes a guess for a game inside the combo game.

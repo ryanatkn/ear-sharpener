@@ -82,11 +82,11 @@ function loadAudio(url: string): Promise<void> {
     if (__TEST__) {
       resolve(undefined);
     } else {
-      function onLoad(): void {
-        audio.removeEventListener('loadeddata', onLoad);
-        resolve(undefined);
-      }
       audio.addEventListener('loadeddata', onLoad);
+    }
+    function onLoad(): void {
+      audio.removeEventListener('loadeddata', onLoad);
+      resolve(undefined);
     }
   });
 }

@@ -6,7 +6,6 @@ import {GameState} from './models/Game';
 import * as NoteDistanceGame from './models/NoteDistanceGame';
 import * as NoteNameGame from './models/NoteNameGame';
 import * as PianoGame from './models/PianoGame';
-import {Action} from './utils/actions';
 
 export interface AppState {
   // Index signature for the rare times we need to iterate through the state.
@@ -66,4 +65,47 @@ export interface GameProps<T extends GameState<TGuess>, TGuess> {
   onGuess(guess: TGuess): void;
   onSetDifficulty(level: number, step: number): void;
   onPresent(): void;
+}
+
+/**
+ * Action types.
+ * Uses the discriminated union types in typescript@next
+ * See https://github.com/Microsoft/TypeScript/pull/9163
+ */
+export type Action = PresentingAction | PresentedAction | SetDifficultyAction
+  | GuessingAction | GuessedAction | AudioLoadedAction | SetActiveGameAction;
+
+export interface PresentingAction {
+  type: 'presenting';
+  payload: {gameName: GameName, forceRefresh: boolean};
+}
+
+export interface PresentedAction {
+  type: 'presented';
+  payload: {gameName: GameName};
+}
+
+export interface SetDifficultyAction {
+  type: 'setDifficulty';
+  payload: {gameName: GameName, level: number, step: number};
+}
+
+export interface GuessingAction {
+  type: 'guessing';
+  payload: {gameName: GameName, guess: GameGuess};
+}
+
+export interface GuessedAction {
+  type: 'guessed';
+  payload: {gameName: GameName};
+}
+
+export interface AudioLoadedAction {
+  type: 'audioLoaded';
+  payload?: undefined;
+}
+
+export interface SetActiveGameAction {
+  type: 'setActiveGame';
+  payload: {gameName: GameName};
 }

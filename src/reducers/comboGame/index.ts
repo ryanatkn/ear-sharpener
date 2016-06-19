@@ -1,7 +1,5 @@
-import {GameName} from '../../types';
-import {Action, isAction} from '../../utils/actions';
+import {Action, GameName} from '../../types';
 import * as I from 'immutable';
-import {SetActiveGameAction} from '../../actions/comboGameActions';
 
 interface IState {
   activeGame: GameName;
@@ -18,7 +16,7 @@ export function getInitialState(): State {
 }
 
 export default function comboGame(state: State = getInitialState(), action: Action): State {
-  if (isAction(action, SetActiveGameAction)) {
+  if (action.type === 'setActiveGame') {
     return state.set('activeGame', action.payload.gameName) as State;
   } else {
     return state;

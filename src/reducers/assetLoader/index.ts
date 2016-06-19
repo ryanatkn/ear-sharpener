@@ -1,6 +1,5 @@
+import {Action} from '../../types';
 import * as I from 'immutable';
-import {AudioLoadedAction} from '../../actions/assetLoaderActions';
-import {Action, isAction} from '../../utils/actions';
 
 interface IState {
   isAudioLoaded: boolean;
@@ -17,7 +16,7 @@ export function getInitialState(): State {
 }
 
 export default function assetLoader(state: State = getInitialState(), action: Action): State {
-  if (isAction(action, AudioLoadedAction)) {
+  if (action.type === 'audioLoaded') {
     return state.set('isAudioLoaded', true) as State;
   } else {
     return state;

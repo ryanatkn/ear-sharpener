@@ -1,7 +1,4 @@
-import {GameName} from '../../types';
-import {Action, isAction} from '../../utils/actions';
-import {GuessingAction, GuessedAction, PresentingAction, PresentedAction,
-  SetDifficultyAction} from '../../actions/gameActions';
+import {Action, GameName} from '../../types';
 import * as Game from '../../models/Game';
 import * as I from 'immutable';
 import * as NoteDistanceGame from '../../models/NoteDistanceGame';
@@ -42,7 +39,7 @@ export default function games(state: State = getInitialState(), action: Action):
    * Disable input while presenting unless the current state has already been presented,
    * allowing the user to make multiple quick guesses.
    */
-  if (isAction(action, PresentingAction)) {
+  if (action.type === 'presenting') {
     const {gameName, forceRefresh} = action.payload;
     let newState = state.update(
       getGameStateKey(gameName),
@@ -57,15 +54,17 @@ export default function games(state: State = getInitialState(), action: Action):
     // Disable input when presenting a game state for the first time.
     // This permits the player to guess immediately after incorrect guesses
     // without waiting for the same state to be presented again.
+    // TODO unfortunately we introduced a subtle bug with the GamePresentButton here.
+    // The button gets disabled when clicked on the note distance game until it is presented.
     if (getGameState(newState, gameName).guessCountForCurrentCorrectChoice === 0) {
       newState = newState.set('isInputEnabled', false) as State;
     }
     return newState;
-  /**
-   * Handles the transformations that should happen when a game finishes presenting.
-   * Input may have been disabled when it started presenting, so re-enable it as necessary.
-   */
-  } else if (isAction(action, PresentedAction)) {
+  } else if (action.type === 'presented') {
+    /**
+     * Handles the transformations that should happen when a game finishes presenting.
+     * Input may have been disabled when it started presenting, so re-enable it as necessary.
+     */
     // TODO this should only enable it if it was disabled in the associated PresentingAction!
     // However that requires some hacky workarounds, and it's a rare enough bug to ignore.
     // One way to do it would be to track a unique id for each dispatched action which gets
@@ -75,7 +74,7 @@ export default function games(state: State = getInitialState(), action: Action):
   /**
    * Sets the difficulty (level and step) for a game.
    */
-  } else if (isAction(action, SetDifficultyAction)) {
+  } else if (action.type === 'setDifficulty') {
     const {gameName, level, step} = action.payload;
     return state.update(
       getGameStateKey(gameName),
@@ -88,7 +87,7 @@ export default function games(state: State = getInitialState(), action: Action):
    * a guess is made on a game and before it completes.
    * Disables input if the guess was correct.
    */
-  } else if (isAction(action, GuessingAction)) {
+  } else if (action.type === 'guessing') {
     const {gameName, guess} = action.payload;
     let newState = state
       .set('lastGameGuessed', gameName)
@@ -111,7 +110,7 @@ export default function games(state: State = getInitialState(), action: Action):
    * to allow for feedback animations.
    * Re-enables input as necessary.
    */
-  } else if (isAction(action, GuessedAction)) {
+  } else if (action.type === 'guessed') {
     // TODO this should only enable it if it was disabled in the associated GuessAction!
     // See the notes in the `PresentedAction` block above for a possible fix.
     return state.set('isInputEnabled', true) as State;

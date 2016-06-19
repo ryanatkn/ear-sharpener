@@ -1,29 +1,23 @@
-import {GetState, Thunk, GameName, GameGuess} from '../../types';
-import {createAction} from '../../utils/actions';
+import {GetState, Thunk, GameName, GameGuess, PresentingAction, PresentedAction,
+  SetDifficultyAction, GuessingAction, GuessedAction} from '../../types';
 import {Dispatch} from 'redux';
 import {getGameState, getGameModel} from '../../reducers/games';
 import * as Promiz from 'bluebird';
 import {shouldAbortPresenting} from '../../models/Game';
 
-export class PresentingAction {
-  static type = 'presenting';
-  payload: {gameName: GameName, forceRefresh: boolean};
+function presenting(gameName: GameName, forceRefresh: boolean): PresentingAction {
+  return {
+    type: 'presenting',
+    payload: {gameName, forceRefresh}
+  };
 }
 
-const presenting = createAction(
-  PresentingAction,
-  (gameName: GameName, forceRefresh: boolean) => ({payload: {gameName, forceRefresh}})
-);
-
-export class PresentedAction {
-  static type = 'presented';
-  payload: {gameName: GameName};
+function presented(gameName: GameName): PresentedAction {
+  return {
+    type: 'presented',
+    payload: {gameName},
+  };
 }
-
-const presented = createAction(
-  PresentedAction,
-  (gameName: GameName) => ({payload: {gameName}})
-);
 
 /**
  * Presents `gameName`, which plays the current sounds.
@@ -52,15 +46,12 @@ export function present(gameName: GameName, forceRefresh: boolean = false): Thun
   };
 }
 
-export class SetDifficultyAction {
-  static type = 'setDifficulty';
-  payload: {gameName: GameName, level: number, step: number};
+function _setDifficulty(gameName: GameName, level: number, step: number): SetDifficultyAction {
+  return {
+    type: 'setDifficulty',
+    payload: {gameName, level, step}
+  };
 }
-
-const _setDifficulty = createAction(
-  SetDifficultyAction,
-  (gameName: GameName, level: number, step: number) => ({payload: {gameName, level, step}})
-);
 
 /**
  * Sets the difficulty (level and step) for a game.
@@ -76,25 +67,19 @@ export function setDifficulty(
   };
 }
 
-export class GuessingAction {
-  static type = 'guessing';
-  payload: {gameName: GameName, guess: GameGuess};
+function guessing(gameName: GameName, guess: GameGuess): GuessingAction {
+  return {
+    type: 'guessing',
+    payload: {gameName, guess},
+  };
 }
 
-const guessing = createAction(
-  GuessingAction,
-  (gameName: GameName, guess: GameGuess) => ({payload: {gameName, guess}})
-);
-
-export class GuessedAction {
-  static type = 'guessed';
-  payload: {gameName: GameName};
+function guessed(gameName: GameName): GuessedAction {
+  return {
+    type: 'guessed',
+    payload: {gameName},
+  };
 }
-
-const guessed = createAction(
-  GuessedAction,
-  (gameName: GameName) => ({payload: {gameName}})
-);
 
 /**
  * Makes a guess against a game.
@@ -119,7 +104,7 @@ export function guess(
         // re-enabling input - we don't want to prematurely enable it.
         const currentGameState = getGameState(getState().games, gameName);
         if (currentGameState.guessCount !== updatedGameState.guessCount) {
-          return;
+          return undefined;
         }
         dispatch(guessed(gameName));
         // Allow callers to provide their own completion logic,

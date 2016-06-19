@@ -7,7 +7,7 @@ describe('createReduxStore', () => {
     const state = store.getState();
     assert.isAtLeast(Object.keys(state).length, 1);
     const unsubscribe = store.subscribe(() => done());
-    store.dispatch({type: 'testAction'});
+    store.dispatch({type: 'testAction'} as any);
     unsubscribe();
   });
 });
