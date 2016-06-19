@@ -35,6 +35,9 @@ export function getInitialState(): State {
   return new StateRecord();
 }
 
+// TODO the formatting here gives me a headache, but using a switch is a bit worse because
+// variable names cannot be reused. Declaring all vars at the top could cause errors,
+// and fully qualifying everything off the action has its own readability problems.
 export default function games(state: State = getInitialState(), action: Action): State {
   /**
    * Handles the transformations that should happen when a game starts presenting.
@@ -63,12 +66,14 @@ export default function games(state: State = getInitialState(), action: Action):
       newState = disableInput(newState, action.meta.actionId);
     }
     return newState;
+
+  /**
+   * Handles the transformations that should happen when a game finishes presenting.
+   * Input may have been disabled when it started presenting, so re-enable it as necessary.
+   */
   } else if (action.type === 'presented') {
-    /**
-     * Handles the transformations that should happen when a game finishes presenting.
-     * Input may have been disabled when it started presenting, so re-enable it as necessary.
-     */
     return enableInput(state, action.payload.presentingActionId);
+
   /**
    * Sets the difficulty (level and step) for a game.
    */
@@ -80,6 +85,7 @@ export default function games(state: State = getInitialState(), action: Action):
         return Game.clearLastGuess(Game.setDifficulty(game, level, step));
       }
     ) as State;
+
   /**
    * Handles the transformations that should happen when
    * a guess is made on a game and before it completes.
@@ -102,6 +108,7 @@ export default function games(state: State = getInitialState(), action: Action):
       newState = disableInput(newState, action.meta.actionId);
     }
     return newState;
+
   /**
    * Handles the transformations that should happen when a guess is completed.
    * There is a delay between this and the `GuessAction` for some games
@@ -110,6 +117,10 @@ export default function games(state: State = getInitialState(), action: Action):
    */
   } else if (action.type === 'guessed') {
     return enableInput(state, action.payload.guessingActionId);
+
+  /**
+   * Unhandled action.
+   */
   } else {
     return state;
   }
