@@ -1,5 +1,6 @@
 import * as React from 'react';
 import pureComponent from '../../utils/pureComponent';
+import {getIntervalName} from '../../models/Notes';
 
 import './style.css';
 
@@ -28,7 +29,10 @@ export default class NoteDistanceChoice extends React.Component<Props, {}> {
 
     return (
       <div className={className} onClick={this.doChoose}>
-        <span className="note-distance-choice-text">{noteDistance}</span>
+        <div className="note-distance-choice-content">
+          <div>{noteDistance}</div>
+          <div className="note-distance-choice-interval-name">{getIntervalName(noteDistance)}</div>
+        </div>
       </div>
     );
   }

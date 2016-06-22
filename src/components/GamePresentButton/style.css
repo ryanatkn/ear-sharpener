@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-base 0;
+  padding: $spacing-base $spacing-xs;
   user-select: none;
   @mixin clickable-play-button .game-present-button-icon, $primary-color, $accent-color, $accent-color-dark, $bg-color;
 
