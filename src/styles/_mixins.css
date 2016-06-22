@@ -33,6 +33,7 @@
     border-radius: 50px;
     height: 24px;
     width: 24px;
+    flex-shrink: 0;
 
     &:after {
       content: '';

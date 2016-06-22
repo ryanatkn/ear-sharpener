@@ -2,7 +2,7 @@ import {noteNames, notes, isNatural,
   noteIsNoteName, noteToNoteName, noteNameToNote,
   getSurroundingNoteNames, getSurroundingNotes,
   getDistanceBetweenNoteNames, getDistanceBetweenNotes,
-  getNoteNameAtDistance, getNoteAtDistance, padOctaves} from './index';
+  getNoteNameAtDistance, getNoteAtDistance, padOctaves, getIntervalName} from './index';
 import * as uniq from 'lodash/uniq';
 import {assert} from 'chai';
 
@@ -236,6 +236,50 @@ describe('Notes', () => {
           'A4', 'A#4', 'B4', 'C5', 'C#5', 'D5', 'D#5', 'E5', 'F5', 'F#5', 'G5', 'G#5',
         ]
       );
+    });
+  });
+
+  describe('getIntervalName', () => {
+    it('should return the name for the interval at the given note distance', () => {
+      assert.equal(getIntervalName(0), 'P1');
+      assert.equal(getIntervalName(1), 'm2');
+      assert.equal(getIntervalName(2), 'M2');
+      assert.equal(getIntervalName(3), 'm3');
+      assert.equal(getIntervalName(4), 'M3');
+      assert.equal(getIntervalName(5), 'P4');
+      assert.equal(getIntervalName(6), 'd5');
+      assert.equal(getIntervalName(7), 'P5');
+      assert.equal(getIntervalName(8), 'm6');
+      assert.equal(getIntervalName(9), 'M6');
+      assert.equal(getIntervalName(10), 'm7');
+      assert.equal(getIntervalName(11), 'M7');
+
+      assert.equal(getIntervalName(12), 'P8');
+      assert.equal(getIntervalName(13), 'm9');
+      assert.equal(getIntervalName(14), 'M9');
+      assert.equal(getIntervalName(15), 'm10');
+      assert.equal(getIntervalName(16), 'M10');
+      assert.equal(getIntervalName(17), 'P11');
+      assert.equal(getIntervalName(18), 'd12');
+      assert.equal(getIntervalName(19), 'P12');
+      assert.equal(getIntervalName(20), 'm13');
+      assert.equal(getIntervalName(21), 'M13');
+      assert.equal(getIntervalName(22), 'm14');
+      assert.equal(getIntervalName(23), 'M14');
+
+      assert.equal(getIntervalName(24), 'P15');
+      assert.equal(getIntervalName(25), 'm16');
+      assert.equal(getIntervalName(26), 'M16');
+      assert.equal(getIntervalName(27), 'm17');
+      assert.equal(getIntervalName(28), 'M17');
+      assert.equal(getIntervalName(29), 'P18');
+      assert.equal(getIntervalName(30), 'd19');
+      assert.equal(getIntervalName(31), 'P19');
+      assert.equal(getIntervalName(32), 'm20');
+      assert.equal(getIntervalName(33), 'M20');
+      assert.equal(getIntervalName(34), 'm21');
+      assert.equal(getIntervalName(35), 'M21');
+      assert.equal(getIntervalName(36), 'P22');
     });
   });
 });

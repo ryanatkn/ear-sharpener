@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   flex-shrink: 1;
   font-size: 24px;
   background-color: $primary-color;
@@ -40,12 +41,20 @@
   @mixin fading-overlay $success-color;
 }
 
-.note-distance-choice-text {
+.note-distance-choice-content {
   position: relative;
   z-index: 1;
   top: 0;
   left: 0;
-  line-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 $spacing-xs;
+}
+
+.note-distance-choice-interval-name {
+  font-size: $font-size-base;
 }
 
 .note-distance-choice--disabled {

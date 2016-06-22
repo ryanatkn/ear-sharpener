@@ -191,3 +191,40 @@ function findNextNoteAfter(note: Note, upToNoteName: NoteName): Note {
     }
   }
 }
+
+/**
+ * Gets the interval name for the number of semitones between two notes.
+ */
+export function getIntervalName(noteDistance: number): string {
+  const semitoneIndex = Math.abs(noteDistance % 12); // starts at 0
+  const octaveIndex = Math.abs(Math.floor(noteDistance / 12)); // starts at 0
+  const octaveOffset = octaveIndex * 7;
+  switch (semitoneIndex) {
+    case 0:
+      return 'P' + (1 + octaveOffset);
+    case 1:
+      return 'm' + (2 + octaveOffset);
+    case 2:
+      return 'M' + (2 + octaveOffset);
+    case 3:
+      return 'm' + (3 + octaveOffset);
+    case 4:
+      return 'M' + (3 + octaveOffset);
+    case 5:
+      return 'P' + (4 + octaveOffset);
+    case 6:
+      return 'd' + (5 + octaveOffset);
+    case 7:
+      return 'P' + (5 + octaveOffset);
+    case 8:
+      return 'm' + (6 + octaveOffset);
+    case 9:
+      return 'M' + (6 + octaveOffset);
+    case 10:
+      return 'm' + (7 + octaveOffset);
+    case 11:
+      return 'M' + (7 + octaveOffset);
+    default:
+      throw new Error('Logic error in `getIntervalName`');
+  }
+}

@@ -115,7 +115,7 @@ const hardcodedDistanceChoicesByLevel: Dict<number[][]> = {
   1: [[1, 12]],
   2: [[1, 4, 12]],
   3: [[4, 7, 12]],
-  4: [[2, 4]],
+  4: [[2, 5]],
   // algorithm continues from here:
   // 3: [[1, 2]]
   // 4: [[1, 2, 3]]
