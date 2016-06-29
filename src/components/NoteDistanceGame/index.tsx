@@ -11,6 +11,7 @@ interface Props extends GameProps<NoteDistanceGameModel.State, number> {}
 @pureComponent
 export default class NoteDistanceGame extends React.Component<Props, {}> {
   // awkward but needed so it can be instantiated generically in ToggleableGame
+  // see https://github.com/Microsoft/TypeScript/issues/3960
   static defaultProps = {
     gameState: null as any,
     isGuessIndicatorEnabled: true,

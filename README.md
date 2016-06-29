@@ -28,14 +28,8 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
       For example, it would follow the rest of the app's conventions that `present(game)`
       increments the `presentCount`, but now they are separate code paths.
       This design is more verbose and error prone than it feels like it should be.
-- Imperfect TypeScript integration:
-    - I wrote about my experience with TypeScript on this
-      game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
-    - lots of awkwardness around Immutable.js records -
-      uses [these overrides](https://github.com/facebook/immutable-js/issues/341#issuecomment-147940378)
-      to get more type safety, but type safety isn't possible when setting values
-    - the game components have to specify all default props to allow the ComboGamePage component to use them generically -
-      [this issue](https://github.com/Microsoft/TypeScript/issues/3960) has a fix
+- I wrote about my experience with TypeScript on this
+  game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
 - There's a boundary between Immutable.js and plain JS objects/arrays in the models
   before the heavier data transformations.
   The app state is represented fully with Immutable.js data structures,
