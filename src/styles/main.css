@@ -21,6 +21,7 @@ body {
   color: $text-color;
   background-color: $bg-color;
   font-size: $font-size-base;
+  font-family: sans-serif;
 }
 
 p {
