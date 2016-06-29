@@ -228,3 +228,37 @@ export function getIntervalName(noteDistance: number): string {
       throw new Error('Logic error in `getIntervalName`');
   }
 }
+
+/**
+ * Gets a string representation of the given note name.
+ */
+export function displayNoteName(noteName: NoteName, separator: string = '\n'): string {
+  switch (noteName) {
+    case 'A':
+      return 'A';
+    case 'A#':
+      return 'A♯' + separator + 'B♭';
+    case 'B':
+      return 'B';
+    case 'C':
+      return 'C';
+    case 'C#':
+      return 'C♯' + separator + 'D♭';
+    case 'D':
+      return 'D';
+    case 'D#':
+      return 'D♯' + separator + 'E♭';
+    case 'E':
+      return 'E';
+    case 'F':
+      return 'F';
+    case 'F#':
+      return 'F♯' + separator + 'G♭';
+    case 'G':
+      return 'G';
+    case 'G#':
+      return 'G♯' + separator + 'A♭';
+    default:
+      throw new Error(`Unknown note name "${noteName}"`);
+  }
+}

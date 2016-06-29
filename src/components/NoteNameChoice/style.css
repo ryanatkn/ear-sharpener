@@ -46,7 +46,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  line-height: 0;
+  text-align: center;
 }
 
 .note-name-choice--disabled {
