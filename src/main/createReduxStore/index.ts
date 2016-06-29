@@ -6,7 +6,7 @@ import actionIdMiddleware from '../../middleware/actionIdMiddleware';
 import logMiddleware from '../../middleware/logMiddleware';
 import thunk from 'redux-thunk';
 import {Store} from '../../types';
-import localStorageMiddleware from '../../middleware/localStorageMiddleware';
+import localStorageStoreEnhancer from '../../middleware/localStorageStoreEnhancer';
 import * as compact from 'lodash/compact';
 
 /**
@@ -26,8 +26,8 @@ export default function createReduxStore(): Store {
 function getStoreEnhancers(): Function[] {
   return compact([
     applyMiddleware(...getMiddleware()),
-    !__TEST__ ? localStorageMiddleware() : null,
-    !__TEST__ ? getDevToolsMiddleware() : null, // will this work in prod? might as well see
+    !__TEST__ ? localStorageStoreEnhancer() : null,
+    !__TEST__ ? getDevToolsStoreEnhancer() : null, // will this work in prod? might as well see
   ]);
 }
 
@@ -39,7 +39,7 @@ function getMiddleware(): Middleware[] {
   ]);
 }
 
-function getDevToolsMiddleware(): Function {
+function getDevToolsStoreEnhancer(): Function {
   return typeof window !== 'undefined' && window.devToolsExtension
     ? window.devToolsExtension()
     : (f: any) => f;

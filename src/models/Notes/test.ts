@@ -1,8 +1,9 @@
-import {noteNames, notes, isNatural,
+import {noteNames, notes, isNatural, NoteName,
   noteIsNoteName, noteToNoteName, noteNameToNote,
   getSurroundingNoteNames, getSurroundingNotes,
   getDistanceBetweenNoteNames, getDistanceBetweenNotes,
-  getNoteNameAtDistance, getNoteAtDistance, padOctaves, getIntervalName} from './index';
+  getNoteNameAtDistance, getNoteAtDistance, padOctaves, getIntervalName,
+  displayNoteName} from './index';
 import * as uniq from 'lodash/uniq';
 import {assert} from 'chai';
 
@@ -280,6 +281,13 @@ describe('Notes', () => {
       assert.equal(getIntervalName(34), 'm21');
       assert.equal(getIntervalName(35), 'M21');
       assert.equal(getIntervalName(36), 'P22');
+    });
+  });
+
+  describe('displayNoteName', () => {
+    it('returns a unique string representation for each note name', () => {
+      const displayedNoteNames = noteNames.map((n: NoteName) => displayNoteName(n));
+      assert.equal(uniq(displayedNoteNames).length, noteNames.length);
     });
   });
 });

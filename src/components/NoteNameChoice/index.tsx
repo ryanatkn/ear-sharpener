@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NoteName} from '../../models/Notes';
+import {NoteName, displayNoteName} from '../../models/Notes';
 import pureComponent from '../../utils/pureComponent';
 
 import './style.css';
@@ -29,7 +29,9 @@ export default class NoteNameChoice extends React.Component<Props, {}> {
 
     return (
       <div className={className} onClick={this.doChoose}>
-        <span className="note-name-choice-text">{noteName}</span>
+        <span className="note-name-choice-text">
+          {displayNoteName(noteName)}
+        </span>
       </div>
     );
   }

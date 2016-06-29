@@ -8,7 +8,7 @@ import {shouldAbortPresenting} from '../../models/Game';
 function presenting(gameName: GameName, forceRefresh: boolean): PresentingAction {
   return {
     type: 'presenting',
-    payload: {gameName, forceRefresh}
+    payload: {gameName, forceRefresh},
   };
 }
 
@@ -49,7 +49,7 @@ export function present(gameName: GameName, forceRefresh: boolean = false): Thun
 function _setDifficulty(gameName: GameName, level: number, step: number): SetDifficultyAction {
   return {
     type: 'setDifficulty',
-    payload: {gameName, level, step}
+    payload: {gameName, level, step},
   };
 }
 

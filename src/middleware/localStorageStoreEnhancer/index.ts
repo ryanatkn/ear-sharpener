@@ -1,4 +1,3 @@
-import {Middleware} from 'redux';
 import * as persistState from 'redux-localstorage';
 import * as get from 'lodash/get';
 import * as Game from '../../models/Game';
@@ -13,7 +12,7 @@ import {AppState, gameNames} from '../../types';
  * but merging the persisted data back into the app state cannot be done generically
  * because `Immutable.fromJS` gives us maps, not the named records we need in the app state.
  */
-export default function localStorageMiddleware() {
+export default function localStorageStoreEnhancer(): Function {
   return persistState(
     [
       'games.pianoGame.level',
