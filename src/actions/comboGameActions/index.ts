@@ -5,6 +5,9 @@ import * as gameActions from '../gameActions';
 import {getNextGame, pauseTimeBetweenGames} from '../../models/ComboGame';
 import {getGameModel} from '../../reducers/games';
 
+/**
+ * Sets the combo game's active game.
+ */
 export function setActiveGame(gameName: GameName): SetActiveGameAction {
   return {
     type: 'setActiveGame',

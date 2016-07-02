@@ -5,20 +5,6 @@ import {getGameState, getGameModel} from '../../reducers/games';
 import * as Promiz from 'bluebird';
 import {shouldAbortPresenting} from '../../models/Game';
 
-function presenting(gameName: GameName, forceRefresh: boolean): PresentingAction {
-  return {
-    type: 'presenting',
-    payload: {gameName, forceRefresh},
-  };
-}
-
-function presented(gameName: GameName, presentingActionId: number): PresentedAction {
-  return {
-    type: 'presented',
-    payload: {gameName, presentingActionId},
-  };
-}
-
 /**
  * Presents `gameName`, which plays the current sounds.
  * The flag `forceRefresh` can be set to always refresh the choices and correct choice
@@ -46,15 +32,28 @@ export function present(gameName: GameName, forceRefresh: boolean = false): Thun
   };
 }
 
-function _setDifficulty(gameName: GameName, level: number, step: number): SetDifficultyAction {
+/**
+ * Indicates that a game is about to be presented.
+ */
+function presenting(gameName: GameName, forceRefresh: boolean): PresentingAction {
   return {
-    type: 'setDifficulty',
-    payload: {gameName, level, step},
+    type: 'presenting',
+    payload: {gameName, forceRefresh},
   };
 }
 
 /**
- * Sets the difficulty (level and step) for a game.
+ * Indicates that a game has finished being presented.
+ */
+function presented(gameName: GameName, presentingActionId: number): PresentedAction {
+  return {
+    type: 'presented',
+    payload: {gameName, presentingActionId},
+  };
+}
+
+/**
+ * Sets the difficulty (level and step) for a game and presents its next state.
  */
 export function setDifficulty(
   gameName: GameName,
@@ -67,24 +66,20 @@ export function setDifficulty(
   };
 }
 
-function guessing(gameName: GameName, guess: GameGuess): GuessingAction {
+/**
+ * Sets the difficulty for a game without any additional effects.
+ */
+function _setDifficulty(gameName: GameName, level: number, step: number): SetDifficultyAction {
   return {
-    type: 'guessing',
-    payload: {gameName, guess},
-  };
-}
-
-function guessed(gameName: GameName, guessingActionId: number): GuessedAction {
-  return {
-    type: 'guessed',
-    payload: {gameName, guessingActionId},
+    type: 'setDifficulty',
+    payload: {gameName, level, step},
   };
 }
 
 /**
  * Makes a guess against a game.
- * The optional flag `presentIfCorrect` can be set to false to give the caller control
- * over what happens on correct guesses. (the combo game uses this functionality)
+ * The caller can customize behavior with the `getDelay` and `onComplete` arguments.
+ * The combo game achieves significantly different behavior on a guess with these.
  */
 export function guess(
   gameName: GameName,
@@ -115,14 +110,34 @@ export function guess(
 }
 
 /**
- * Default behavior for `guess` that can be overridden by the caller.
+ * Indicates that a guess is being made on a game.
+ */
+function guessing(gameName: GameName, guess: GameGuess): GuessingAction {
+  return {
+    type: 'guessing',
+    payload: {gameName, guess},
+  };
+}
+
+/**
+ * Indicates that a guess has finished being made on a game.
+ */
+function guessed(gameName: GameName, guessingActionId: number): GuessedAction {
+  return {
+    type: 'guessed',
+    payload: {gameName, guessingActionId},
+  };
+}
+
+/**
+ * Default delay timer for `guess` that can be overridden by the caller.
  */
 function getDelayAfterGuess(wasCorrect: boolean, gameName: GameName): number {
   return getGameModel(gameName).getPresentDelayAfterGuess(wasCorrect);
 }
 
 /**
- * Default behavior for `guess` that can be overridden by the caller.
+ * Default behavior when a `guess` completes that can be overridden by the caller.
  */
 function onGuessComplete(
   _wasCorrect: boolean, // isn't needed for the default implemention
