@@ -8,7 +8,7 @@ import PianoGame from '../../components/PianoGame';
 import NoteNameGame from '../../components/NoteNameGame';
 import NoteDistanceGame from '../../components/NoteDistanceGame';
 import ToggleableGame from '../../components/ToggleableGame';
-import {GameName, GameGuess, GameProps} from '../../types';
+import {GameName, gameNames, GameGuess, GameProps} from '../../types';
 import {GameState} from '../../models/Game';
 import * as PianoGameModel from '../../models/PianoGame';
 import * as NoteNameGameModel from '../../models/NoteNameGame';
@@ -32,28 +32,24 @@ class ComboGamePage extends React.Component<Props, {}> {
     this.props.dispatch(gameActions.present(this.props.activeGameName));
   }
 
-  renderToggleableGame(gameName: GameName): JSX.Element {
+  render(): JSX.Element {
     const {activeGameName, isGuessIndicatorEnabled, isInputEnabled} = this.props;
     return (
-      <ToggleableGame
-        GameComponent={getGameComponent(gameName)}
-        isVisible={gameName === activeGameName}
-        gameState={getGameState(gameName, this.props)}
-        isGuessIndicatorEnabled={isGuessIndicatorEnabled}
-        isInputEnabled={isInputEnabled}
-        onGuess={this.onGuess}
-        onSetDifficulty={this.doSetDifficulty}
-        onPresent={this.doPresent}
-      />
-    );
-  }
-
-  render(): JSX.Element {
-    return (
       <div className="page">
-        {this.renderToggleableGame('piano-game')}
-        {this.renderToggleableGame('note-distance-game')}
-        {this.renderToggleableGame('note-name-game')}
+        {gameNames.map((gameName: GameName): JSX.Element => {
+          return gameName === 'combo-game'
+            ? null
+            : <ToggleableGame key={gameName}
+                GameComponent={getGameComponent(gameName)}
+                isVisible={gameName === activeGameName}
+                gameState={getGameState(gameName, this.props)}
+                isGuessIndicatorEnabled={isGuessIndicatorEnabled}
+                isInputEnabled={isInputEnabled}
+                onGuess={this.onGuess}
+                onSetDifficulty={this.doSetDifficulty}
+                onPresent={this.doPresent}
+              />;
+        })}
       </div>
     );
   }

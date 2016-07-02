@@ -3,6 +3,7 @@ import LoadingIndicator from '../LoadingIndicator';
 import GameLink from '../GameLink';
 import pureComponent from '../../utils/pureComponent';
 import Link from '../Link';
+import {GameName, gameNames} from '../../types';
 
 import './style.css';
 
@@ -25,10 +26,9 @@ export default class AppHeader extends React.Component<Props, {}> {
           {isLoading
             ? <LoadingIndicator/>
             : <div className="app-header-game-links">
-                <GameLink gameName="piano-game"/>
-                <GameLink gameName="note-distance-game"/>
-                <GameLink gameName="note-name-game"/>
-                <GameLink gameName="combo-game"/>
+                {gameNames.map((gameName: GameName): JSX.Element => {
+                  return <GameLink key={gameName} gameName={gameName}/>;
+                })}
               </div>
           }
         </div>

@@ -48,7 +48,7 @@ export interface Thunk<T> {
 // which seems to defeat the purpose.
 export type GameName = 'combo-game' | 'piano-game' | 'note-name-game' | 'note-distance-game';
 export const gameNames: GameName[] = [
-  'combo-game', 'piano-game', 'note-name-game', 'note-distance-game',
+  'piano-game', 'note-distance-game', 'note-name-game', 'combo-game',
 ];
 export type GameGuess = NoteDistanceGame.Guess | NoteNameGame.Guess | PianoGame.Guess;
 
