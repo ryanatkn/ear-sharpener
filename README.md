@@ -14,7 +14,8 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
   Enzyme, Webpack, and the [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension).
 - I wrote about my experience with TypeScript on this
   game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
-- Redux actions are type safe in reducers using the discriminated union types available in TypeScript nightly.
+- Redux actions are type safe in reducers using the discriminated union types
+  available in the pre-2.0 TypeScript nightly.
   The actions are defined in [`src/types.ts`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/types.ts).
   The old ununsed hacky action implementation is in
   [`src/utils/actions`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/utils/actions/index.ts).
@@ -52,7 +53,7 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
   like the feedback animations after guesses.
   This lead to some strange workarounds like tracking action counters in the game state
   that get used in React component keys to get the desired animations.
-- All non-container React components implement a shallow comparefor `shouldComponentUpdate`,
+- All non-container React components implement a shallow compare for `shouldComponentUpdate`,
   made possible by Redux and immutable app state.
 
 ## Possible future enhancements

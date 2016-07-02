@@ -30,11 +30,6 @@ export interface Dispatch {
   <T extends Promise<any>>(action: Thunk<T>): T; // thunks in this app must return a promise
 }
 
-export interface MiddlewareArg {
-  dispatch: Dispatch;
-  getState: GetState;
-}
-
 // Use this store interface instead of Redux.Store to get type safe `getState`.
 export interface Store {
   getReducer(): Reducer;
