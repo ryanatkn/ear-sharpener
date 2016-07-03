@@ -79,6 +79,7 @@ function _setDifficulty(gameName: GameName, level: number, step: number): SetDif
 /**
  * Makes a guess against a game.
  * The caller can customize behavior with the `getDelay` and `onComplete` arguments.
+ * The `onComplete` function does not get called if the state is stale after the guess completes.
  * The combo game achieves significantly different behavior on a guess with these.
  */
 export function guess(
@@ -95,16 +96,16 @@ export function guess(
     const wasCorrect = updatedGameState.wasLastGuessCorrect;
     return Promiz.delay(getDelay(wasCorrect, gameName))
       .then((): Promise<void> => {
-        // Abort if another guess has been made. The other guess action should handle
-        // re-enabling input - we don't want to prematurely enable it.
-        const currentGameState = getGameState(getState().games, gameName);
-        if (currentGameState.guessCount !== updatedGameState.guessCount) {
-          return undefined;
-        }
         dispatch(guessed(gameName, actionId));
-        // Allow callers to provide their own completion logic,
-        // but include a default that refreshes and presents the current game.
-        return onComplete(wasCorrect, gameName, dispatch);
+        // Abort presenting if this guess is now stale.
+        const currentGameState = getGameState(getState().games, gameName);
+        if (shouldAbortPresenting(updatedGameState, currentGameState)) {
+          return undefined;
+        } else {
+          // Allow callers to provide their own completion logic,
+          // but include a default that presents the current game.
+          return onComplete(wasCorrect, gameName, dispatch);
+        }
       });
   };
 }

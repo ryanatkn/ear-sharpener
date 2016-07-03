@@ -219,7 +219,7 @@ export function createLevels(levelCount: number): I.Seq.Indexed<number> {
  * clicks around on the nav, but we have no notion of an active game at the moment.
  * (the combo game active game is a different concept)
  */
-export function shouldAbortPresenting<TGuess, T extends GameState<TGuess>>(
+export function shouldAbortPresenting<T extends GameState<any>>(
   originalGameState: T,
   currentGameState: T
 ): boolean {

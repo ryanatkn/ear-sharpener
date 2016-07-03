@@ -17,7 +17,7 @@ interface IState {
   // Other state
   lastGameGuessed: GameName;
   isInputEnabled: boolean;
-  inputDisabledActionId: number;
+  inputDisabledActionIds: I.Set<number>;
 }
 
 export type State = I.Record.IRecord<IState>;
@@ -28,7 +28,7 @@ const StateRecord = I.Record<IState>({
   pianoGame: PianoGame.create(),
   lastGameGuessed: null,
   isInputEnabled: true,
-  inputDisabledActionId: -1,
+  inputDisabledActionIds: I.Set<number>(),
 });
 
 export function getInitialState(): State {
@@ -158,22 +158,28 @@ export function getGameState(state: State, gameName: GameName): Game.GameState<a
 }
 
 /**
- * Disables input on the state, tracking which action last disabled input so it can be
- * re-enabled only when the associated followup action comes through.
+ * Disables input on the state, tracking which actions have disabled input so it can be
+ * re-enabled only when there are no pending actions that also requested to disable input.
  */
 function disableInput(state: State, actionId: number): State {
   return state
     .set('isInputEnabled', false)
-    .set('inputDisabledActionId', actionId) as State;
+    .set('inputDisabledActionIds', state.inputDisabledActionIds.add(actionId)) as State;
 }
 
 /**
- * Enables input on the state, but only if the last action to disable it is `actionId`.
+ * Enables input on the state,
+ * but only if there are no pending actions that requested to disable input.
  * This prevents a bug where input can be enabled prematurely if multiple actions
  * that disable it come through.
  */
 function enableInput(state: State, actionId: number): State {
-  return state.inputDisabledActionId === actionId
-      ? state.set('isInputEnabled', true) as State
-      : state;
+  let newState = state.set(
+    'inputDisabledActionIds',
+    state.inputDisabledActionIds.remove(actionId)
+  ) as State;
+  if (newState.inputDisabledActionIds.size === 0) {
+    newState = newState.set('isInputEnabled', true) as State;
+  }
+  return newState;
 }
