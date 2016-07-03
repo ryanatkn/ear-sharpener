@@ -35,7 +35,7 @@ export default class LevelMapLevel extends React.Component<Props, {}> {
     );
   }
 
-  doClickItem = (step: number) => {
+  doClickItem = (step: number): void => {
     this.props.onSetDifficulty(this.props.level, step);
   };
 }

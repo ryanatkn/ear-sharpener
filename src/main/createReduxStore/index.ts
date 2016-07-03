@@ -42,5 +42,5 @@ function getMiddleware(): Middleware[] {
 function getDevToolsStoreEnhancer(): Function {
   return typeof window !== 'undefined' && window.devToolsExtension
     ? window.devToolsExtension()
-    : (f: any) => f;
+    : (f: any): any => f;
 }

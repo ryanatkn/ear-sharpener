@@ -12,7 +12,7 @@ describe('LoadingIndicator', () => {
     let tickCount = 0;
     let lastText: any = null;
     const onTick = instance.onTick;
-    instance.onTick = () => {
+    instance.onTick = (): void => {
       tickCount++;
       if (tickCount === 5) {
         instance.componentWillUnmount();

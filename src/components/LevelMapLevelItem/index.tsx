@@ -28,7 +28,7 @@ export default class LevelMapLevelItem extends React.Component<Props, {}> {
     );
   }
 
-  doClick = () => {
+  doClick = (): void => {
     this.props.onClick(this.props.step);
   };
 }

@@ -8,7 +8,7 @@ describe('GamePresentButton', () => {
   it('should render children', () => {
     const children = <div>test children</div>;
     const wrapper = shallow(
-      <GamePresentButton isEnabled={true} onClick={() => null}>
+      <GamePresentButton isEnabled={true} onClick={(): void => null}>
         {children}
       </GamePresentButton>
     );

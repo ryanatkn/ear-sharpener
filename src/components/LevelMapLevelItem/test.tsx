@@ -11,7 +11,7 @@ describe('LevelMapLevelItem', () => {
         step={1}
         isComplete={false}
         isActive={false}
-        onClick={() => null}
+        onClick={(): void => null}
       />
     );
   });

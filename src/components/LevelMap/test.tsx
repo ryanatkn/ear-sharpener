@@ -11,7 +11,7 @@ describe('LevelMap', () => {
         stepCounts={I.Map<number, number>(I.Range(1, 5).zip(I.Range(1, 5)))}
         activeLevel={1}
         activeStep={1}
-        onSetDifficulty={() => null}
+        onSetDifficulty={(): void => null}
       />
     );
   });

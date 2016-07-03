@@ -10,7 +10,7 @@ describe('actions', () => {
   describe('createAction', () => {
     it('should create an action that returns the expected action data', () => {
       class TestAction {
-        static type = 'testAction';
+        static type: string = 'testAction';
         payload: {
           foo: string;
           bar: number;
@@ -31,11 +31,11 @@ describe('actions', () => {
   describe('isAction', () => {
     it('should test whether an action is of a specific type, and TypeScript\'s flow analysis should understand the narrowed type', () => { // tslint:disable-line:max-line-length
       class TestAction1 {
-        static type = 'testAction1';
+        static type: string = 'testAction1';
         foo: number;
       }
       class TestAction2 {
-        static type = 'testAction2';
+        static type: string = 'testAction2';
       }
       const testAction1 = createAction(TestAction1, () => ({foo: 1}));
       const testActionData1 = testAction1();

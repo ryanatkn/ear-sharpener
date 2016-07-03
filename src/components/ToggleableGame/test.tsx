@@ -14,9 +14,9 @@ describe('ToggleableGame', () => {
         gameState={NoteNameGameModel.create()}
         isGuessIndicatorEnabled={true}
         isInputEnabled={true}
-        onGuess={() => null}
-        onSetDifficulty={() => null}
-        onPresent={() => null}
+        onGuess={(): void => null}
+        onSetDifficulty={(): void => null}
+        onPresent={(): void => null}
       />
     );
     assert.equal(wrapper.find(NoteNameGame).length, 1, 'should render the game component');
@@ -31,9 +31,9 @@ describe('ToggleableGame', () => {
         gameState={NoteNameGameModel.create()}
         isGuessIndicatorEnabled={true}
         isInputEnabled={true}
-        onGuess={() => null}
-        onSetDifficulty={() => null}
-        onPresent={() => null}
+        onGuess={(): void => null}
+        onSetDifficulty={(): void => null}
+        onPresent={(): void => null}
       />
     );
     assert.equal(wrapper.find(NoteNameGame).length, 1, 'should render the game component');

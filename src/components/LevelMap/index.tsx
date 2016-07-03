@@ -16,7 +16,8 @@ interface Props {
 
 @pureComponent
 export default class LevelMap extends React.Component<Props, {}> {
-  static defaultProps = {
+  // the `any` type is unfortunate - see https://github.com/Microsoft/TypeScript/issues/4889
+  static defaultProps: any = {
     minRenderedCount: 5,
   };
 

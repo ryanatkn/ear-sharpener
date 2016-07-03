@@ -12,7 +12,7 @@ interface State {
 
 @pureComponent
 export default class LoadingIndicator extends React.Component<{}, State> {
-  state = {
+  state: State = {
     tickCount: 0,
   };
 

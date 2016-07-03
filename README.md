@@ -33,7 +33,8 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
       so mocking the store would require mocking all state changes after each dispatch,
       which duplicates reducer logic and adds significant complexity.
       Given this dependency of actions on reducers,
-      I wrote the action tests to include the entire action/reducer flow,
+      I wrote the action tests to include the entire action/reducer flow
+      and assert the state changes rather than the dispatched actions,
       and the reducers have simple smoke tests.
     - Redux reducers should be pure,
       so presenting a game (playing its audio) is not performed in reducers.
@@ -56,15 +57,6 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 - All non-container React components implement a shallow compare for `shouldComponentUpdate`,
   made possible by Redux and immutable app state.
 
-## Possible future enhancements
-- more sounds than just piano, like other instruments and generated synths
-- expose game variables in the ui so the player can configure things to their liking
-- let the player lock the current difficulty level
-- more game types? variations of existing games?
-- better support for mobile and keyboard controls
-- display audio load failures to the player instead of an unending loading animation
-- ...? [share](https://github.com/ryanatkn/ear-sharpener/issues) your ideas!
-
 ## Develop
 
     npm install
@@ -73,6 +65,15 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
     npm test
     npm start
     # browse to http://localhost:8080
+
+## Possible future enhancements
+- more sounds than just piano, like other instruments and generated synths
+- expose game variables in the ui so the player can configure things to their liking
+- let the player lock the current difficulty level
+- more game types? variations of existing games?
+- better support for mobile and keyboard controls
+- display audio load failures to the player instead of an unending loading animation
+- ...? [share](https://github.com/ryanatkn/ear-sharpener/issues) your ideas!
 
 ## Piano audio samples
 

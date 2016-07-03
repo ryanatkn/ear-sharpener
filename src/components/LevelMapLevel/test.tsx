@@ -15,7 +15,7 @@ describe('LevelMapLevel', () => {
         isActive={true}
         stepCount={stepCount}
         activeStep={1}
-        onSetDifficulty={() => null}
+        onSetDifficulty={(): void => null}
       />
     );
     const levelItemsWrapper = wrapper.find(LevelMapLevelItem);

@@ -29,13 +29,15 @@ const BLACK_KEY_HEIGHT_MULT = 0.7;
 
 @pureComponent
 export default class Piano extends React.Component<Props, State> {
-
-  static defaultProps = {
+  // the `any` type is unfortunate - see https://github.com/Microsoft/TypeScript/issues/4889
+  static defaultProps: any = {
     isActive: true,
     isGuessIndicatorEnabled: true,
   };
 
-  state = {pianoWrapperWidth: UNRENDERED_PIANO_WIDTH};
+  state: State = {
+    pianoWrapperWidth: UNRENDERED_PIANO_WIDTH,
+  };
 
   componentDidMount(): void {
     this.listenToResize();

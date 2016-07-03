@@ -10,9 +10,9 @@ describe('NoteNameGame', () => {
         gameState={NoteNameGameModel.create()}
         isGuessIndicatorEnabled={true}
         isInputEnabled={true}
-        onGuess={() => null}
-        onSetDifficulty={() => null}
-        onPresent={() => null}
+        onGuess={(): void => null}
+        onSetDifficulty={(): void => null}
+        onPresent={(): void => null}
       />
     );
   });

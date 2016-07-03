@@ -11,7 +11,7 @@ let currentActionId = 1;
  * on 'presented' if the last action to disable input was the associated 'presenting' action.
  */
 export default (): Middleware => {
-  return () => (next: Function) => (action: Action) => {
+  return () => (next: Function) => (action: Action) => { // tslint:disable-line:typedef
     const actionId = currentActionId++;
     if (action.meta) {
       action.meta.actionId = actionId;
