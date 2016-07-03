@@ -59,6 +59,7 @@
   },
   "pre-commit": [
     "lint",
-    "typecheck"
+    "typecheck",
+    "test"
   ]
 }
