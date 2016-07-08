@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/ryanatkn/ear-sharpener.git"
+    "url": "git+ssh://git@github.org/ryanatkn/ear-sharpener.git"
   },
   "author": "Ryan Atkinson <ryanatkn@gmail.com>",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/ryanatkn/ear-sharpener#readme",
+  "homepage": "https://github.org/ryanatkn/ear-sharpener#readme",
   "dependencies": {
     "bluebird": "^3.4.0",
     "immutable": "^3.7.6",
