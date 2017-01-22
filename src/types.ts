@@ -17,7 +17,7 @@ export interface AppState {
   games: games.State;
 
   // react-router-redux does not provide a type for its state,
-  // and this is needed to let pure components update on routing changes. 
+  // and this is needed to let pure components update on routing changes.
   routing: {locationBeforeTransitions: {key: string}};
 }
 
@@ -43,13 +43,25 @@ export interface Thunk<T> {
   (dispatch: Dispatch, getState?: GetState): T;
 }
 
+// This is a bit odd, but it allows us to get `GameName` and `gameNames` generically.
+const GameNames = {
+  'combo-game': 1,
+  'piano-game': 1,
+  'note-name-game': 1,
+  'note-distance-game': 1,
+};
+export type GameName = keyof typeof GameNames;
+export const gameNames = keysOf(GameNames);
+
+// This helper is used because `Object.keys` doesn't return the desired type.
+function keysOf<T, U extends (keyof T)[]>(t: T): U {
+  return Object.keys(t) as U;
+}
+
+
 // There's no type safety when `GameName` and `GameGuess` are used together.
 // Tuple types don't work with the polymorphism we have in the components without casting,
 // which seems to defeat the purpose.
-export type GameName = 'combo-game' | 'piano-game' | 'note-name-game' | 'note-distance-game';
-export const gameNames: GameName[] = [
-  'piano-game', 'note-distance-game', 'note-name-game', 'combo-game',
-];
 export type GameGuess = NoteDistanceGame.Guess | NoteNameGame.Guess | PianoGame.Guess;
 
 export interface GameProps<T extends GameState<TGuess>, TGuess> {

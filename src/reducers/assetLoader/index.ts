@@ -16,9 +16,12 @@ export function getInitialState(): State {
 }
 
 export default function assetLoader(state: State = getInitialState(), action: Action): State {
-  if (action.type === 'audioLoaded') {
-    return state.set('isAudioLoaded', true) as State;
-  } else {
-    return state;
+  switch (action.type) {
+    case 'audioLoaded': {
+      return state.set('isAudioLoaded', true) as State;
+    }
+    default: {
+      return state;
+    }
   }
 }

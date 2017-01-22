@@ -1,6 +1,7 @@
 {
   "extends": ["tslint-config-strictish"],
   "rules": {
-    "member-access": false
+    "member-access": false,
+    "no-switch-case-fall-through": false
   }
 }

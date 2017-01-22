@@ -35,94 +35,100 @@ export function getInitialState(): State {
   return new StateRecord();
 }
 
-// TODO the formatting here gives me a headache, but using a switch is a bit worse because
-// variable names cannot be reused. Declaring all vars at the top could cause errors,
-// and fully qualifying everything off the action has its own readability problems.
 export default function games(state: State = getInitialState(), action: Action): State {
-  /**
-   * Handles the transformations that should happen when a game starts presenting.
-   * Disable input while presenting unless the current state has already been presented,
-   * allowing the user to make multiple quick guesses.
-   */
-  if (action.type === 'presenting') {
-    const {gameName, forceRefresh} = action.payload;
-    let newState = state.update(
-      getGameStateKey(gameName),
-      (game: Game.GameState<any>): Game.GameState<any> => {
-        // Increment a counter so we can determine if an async present is stale.
-        const newGame = game.set('presentCount', game.presentCount + 1);
-        // Perform a refresh. This can be a noop if no refresh is necessary or forced.
-        const {refreshChoices, refreshCorrectChoice} = getGameModel(gameName);
-        return Game.refresh(newGame, refreshChoices, refreshCorrectChoice, forceRefresh);
-      }
-    ) as State;
-    // Disable input when presenting a game state for the first time.
-    // This permits the player to guess immediately after incorrect guesses
-    // without waiting for the same state to be presented again.
-    // TODO unfortunately we introduced an undesirable UX quirk with the GamePresentButton here.
-    // The button is disabled when clicked for the note distance game until it finishes presenting.
-    // Ideally the user should be able to click the button rapidly without it being disabled.
-    if (getGameState(newState, gameName).guessCountForCurrentCorrectChoice === 0) {
-      newState = disableInput(newState, action.meta.actionId);
-    }
-    return newState;
+  switch (action.type) {
 
-  /**
-   * Handles the transformations that should happen when a game finishes presenting.
-   * Input may have been disabled when it started presenting, so re-enable it as necessary.
-   */
-  } else if (action.type === 'presented') {
-    return enableInput(state, action.payload.presentingActionId);
-
-  /**
-   * Sets the difficulty (level and step) for a game.
-   */
-  } else if (action.type === 'setDifficulty') {
-    const {gameName, level, step} = action.payload;
-    return state.update(
-      getGameStateKey(gameName),
-      (game: Game.GameState<any>): Game.GameState<any> => {
-        return Game.clearLastGuess(Game.setDifficulty(game, level, step));
-      }
-    ) as State;
-
-  /**
-   * Handles the transformations that should happen when
-   * a guess is made on a game and before it completes.
-   * Disables input if the guess was correct.
-   */
-  } else if (action.type === 'guessing') {
-    const {gameName, guess} = action.payload;
-    let newState = state
-      .set('lastGameGuessed', gameName)
-      .update(
+    /**
+     * Handles the transformations that should happen when a game starts presenting.
+     * Disable input while presenting unless the current state has already been presented,
+     * allowing the user to make multiple quick guesses.
+     */
+    case 'presenting': {
+      const {gameName, forceRefresh} = action.payload;
+      let newState = state.update(
         getGameStateKey(gameName),
         (game: Game.GameState<any>): Game.GameState<any> => {
-          return Game.guess(game, guess);
+          // Increment a counter so we can determine if an async present is stale.
+          const newGame = game.set('presentCount', game.presentCount + 1);
+          // Perform a refresh. This can be a noop if no refresh is necessary or forced.
+          const {refreshChoices, refreshCorrectChoice} = getGameModel(gameName);
+          return Game.refresh(newGame, refreshChoices, refreshCorrectChoice, forceRefresh);
         }
       ) as State;
-    // Disable input for correct guesses until the `GuessedAction` occurs.
-    // This permits the player to guess immediately after incorrect guesses
-    // without waiting for the same state to be presented again.
-    if (getGameState(newState, gameName).wasLastGuessCorrect) {
-      newState = disableInput(newState, action.meta.actionId);
+      // Disable input when presenting a game state for the first time.
+      // This permits the player to guess immediately after incorrect guesses
+      // without waiting for the same state to be presented again.
+      // TODO unfortunately we introduced an undesirable UX quirk with the GamePresentButton here.
+      // The button is disabled when clicked for the note distance game
+      // until it finishes presenting.
+      // Ideally the user should be able to click the button rapidly without it being disabled.
+      if (getGameState(newState, gameName).guessCountForCurrentCorrectChoice === 0) {
+        newState = disableInput(newState, action.meta.actionId);
+      }
+      return newState;
     }
-    return newState;
 
-  /**
-   * Handles the transformations that should happen when a guess is completed.
-   * There is a delay between this and the `GuessAction` for some games
-   * to allow for feedback animations.
-   * Re-enables input as necessary.
-   */
-  } else if (action.type === 'guessed') {
-    return enableInput(state, action.payload.guessingActionId);
+    /**
+     * Handles the transformations that should happen when a game finishes presenting.
+     * Input may have been disabled when it started presenting, so re-enable it as necessary.
+     */
+    case 'presented': {
+      return enableInput(state, action.payload.presentingActionId);
+    }
 
-  /**
-   * Unhandled action.
-   */
-  } else {
-    return state;
+    /**
+     * Sets the difficulty (level and step) for a game.
+     */
+    case 'setDifficulty': {
+      const {gameName, level, step} = action.payload;
+      return state.update(
+        getGameStateKey(gameName),
+        (game: Game.GameState<any>): Game.GameState<any> => {
+          return Game.clearLastGuess(Game.setDifficulty(game, level, step));
+        }
+      ) as State;
+    }
+
+    /**
+     * Handles the transformations that should happen when
+     * a guess is made on a game and before it completes.
+     * Disables input if the guess was correct.
+     */
+    case 'guessing': {
+      const {gameName, guess} = action.payload;
+      let newState = state
+        .set('lastGameGuessed', gameName)
+        .update(
+          getGameStateKey(gameName),
+          (game: Game.GameState<any>): Game.GameState<any> => {
+            return Game.guess(game, guess);
+          }
+        ) as State;
+      // Disable input for correct guesses until the `GuessedAction` occurs.
+      // This permits the player to guess immediately after incorrect guesses
+      // without waiting for the same state to be presented again.
+      if (getGameState(newState, gameName).wasLastGuessCorrect) {
+        newState = disableInput(newState, action.meta.actionId);
+      }
+      return newState;
+    }
+
+    /**
+     * Handles the transformations that should happen when a guess is completed.
+     * There is a delay between this and the `GuessAction` for some games
+     * to allow for feedback animations.
+     * Re-enables input as necessary.
+     */
+    case 'guessed': {
+      return enableInput(state, action.payload.guessingActionId);
+    }
+
+    /**
+     * Unhandled action.
+     */
+    default: {
+      return state;
+    }
   }
 };
 

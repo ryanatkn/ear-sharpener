@@ -16,9 +16,12 @@ export function getInitialState(): State {
 }
 
 export default function comboGame(state: State = getInitialState(), action: Action): State {
-  if (action.type === 'setActiveGame') {
-    return state.set('activeGame', action.payload.gameName) as State;
-  } else {
-    return state;
+  switch (action.type) {
+    case 'setActiveGame': {
+      return state.set('activeGame', action.payload.gameName) as State;
+    }
+    default: {
+      return state;
+    }
   }
 };

@@ -9,21 +9,11 @@ function getPath(gameName: GameName): string {
   return '/' + gameName;
 }
 
-/**
- * Would be nice if TypeScript allowed this type signature,
- * but only `number` and `string` work as index types.
- *    interface GameNameTitles {
- *      [key: GameName]: string;
- *    }
- */
-export function getGameNameTitle(gameName: GameName): string {
-  switch (gameName) {
-    case 'combo-game': return 'Combo Game';
-    case 'piano-game': return 'Piano Game';
-    case 'note-name-game': return 'Note Name Game';
-    case 'note-distance-game': return 'Note Distance Game';
-    default: throw new Error(`Unknown game name "${gameName}"`);
-  }
+export const gameNameTitle: Record<GameName, string> = {
+  'combo-game': 'Combo Game',
+  'piano-game': 'Piano Game',
+  'note-name-game': 'Note Name Game',
+  'note-distance-game': 'Note Distance Game',
 };
 
 interface Props {
@@ -36,7 +26,7 @@ export default class GameLink extends React.Component<Props, {}> {
     const {gameName} = this.props;
     return (
       <Link to={getPath(gameName)} className="game-link link-unstyled">
-        {getGameNameTitle(gameName)}
+        {gameNameTitle[gameName]}
       </Link>
     );
   }

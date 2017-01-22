@@ -4,7 +4,7 @@
 
 /* tslint:disable:no-internal-module no-unused-variable no-namespace */
 
-type nodeEnv = 'production' | 'development';
+type nodeEnv = 'production' | 'development' | 'test';
 interface Process {
   env: {
     NODE_ENV: nodeEnv;

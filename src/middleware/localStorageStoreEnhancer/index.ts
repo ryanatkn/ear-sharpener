@@ -47,7 +47,7 @@ export default function localStorageStoreEnhancer(): Function {
             initialState[reducerName] = initialState[reducerName].set(
               gameName,
               initialState[reducerName][gameName].set(gameKey, persistedState[key])
-            );
+            ) as any;
           } else {
             throw new Error(`Unimplemented merge behavior for key '${key}'`);
           }

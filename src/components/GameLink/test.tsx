@@ -1,4 +1,4 @@
-import GameLink, {getGameNameTitle} from './index';
+import GameLink, {gameNameTitle} from './index';
 import * as React from 'react';
 import {shallow} from 'enzyme';
 import {assert} from 'chai';
@@ -14,7 +14,7 @@ describe('GameLink', () => {
     assert(
       wrapper.containsMatchingElement(
         <Link to={`/${gameName}`}>
-          {getGameNameTitle(gameName)}
+          {gameNameTitle[gameName]}
         </Link>
       ),
       'should have the expected link and text'
