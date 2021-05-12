@@ -2,7 +2,13 @@
   "name": "ear-sharpener",
   "version": "0.1.0",
   "description": "a simple game for practicing pitch perception",
-  "main": "index.js",
+  "license": "Unlicense",
+  "homepage": "https://github.org/ryanatkn/ear-sharpener#readme",
+  "author": {
+    "name": "Ryan Atkinson",
+    "email": "mail@ryanatkn.com",
+    "url": "https://www.ryanatkn.com"
+  },
   "scripts": {
     "start": "webpack-dev-server --progress --colors --inline",
     "typecheck": "tsc --noEmit",
@@ -12,11 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/ryanatkn/ear-sharpener.git"
+    "url": "git+ssh://git@github.org/ryanatkn/ear-sharpener.git"
   },
-  "author": "Ryan Atkinson <ryanatkn@gmail.com>",
-  "license": "MIT",
-  "homepage": "https://bitbucket.org/ryanatkn/ear-sharpener#readme",
   "dependencies": {
     "bluebird": "^3.4.0",
     "immutable": "^3.7.6",
@@ -51,14 +54,15 @@
     "ts-loader": "^0.8.1",
     "ts-node": "^0.8.0",
     "tslint": "^3.6.0",
-    "tslint-config-strictish": "git+https://github.com/ryanatkn/tslint-config-strictish.git",
+    "tslint-config-strictish": "git+https://github.com/ryanatkn/tslint-config-strictish.git#v3.12.0",
     "tslint-loader": "^2.1.3",
-    "typescript": "1.9.0-dev.20160619-1.0",
+    "typescript": "^2.1.0",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   },
   "pre-commit": [
     "lint",
-    "typecheck"
+    "typecheck",
+    "test"
   ]
 }
