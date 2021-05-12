@@ -23,7 +23,7 @@ export default class IndexPage extends React.Component<{}, {}> {
         <p>
           If you have any suggestions for the game or the
           code <a href="https://github.com/ryanatkn/ear-sharpener/issues">please share them</a>!
-          You can also email me at ryanatkn at gmail.
+          You can also email me at mail at ryanatkn.com.
         </p>
       </div>
     );
