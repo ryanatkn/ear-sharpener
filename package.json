@@ -2,7 +2,13 @@
   "name": "ear-sharpener",
   "version": "0.1.0",
   "description": "a simple game for practicing pitch perception",
-  "main": "index.js",
+  "license": "Unlicense",
+  "homepage": "https://github.org/ryanatkn/ear-sharpener#readme",
+  "author": {
+    "name": "Ryan Atkinson",
+    "email": "mail@ryanatkn.com",
+    "url": "https://www.ryanatkn.com"
+  },
   "scripts": {
     "start": "webpack-dev-server --progress --colors --inline",
     "typecheck": "tsc --noEmit",
@@ -14,9 +20,6 @@
     "type": "git",
     "url": "git+ssh://git@github.org/ryanatkn/ear-sharpener.git"
   },
-  "author": "Ryan Atkinson <ryanatkn@gmail.com>",
-  "license": "MIT",
-  "homepage": "https://github.org/ryanatkn/ear-sharpener#readme",
   "dependencies": {
     "bluebird": "^3.4.0",
     "immutable": "^3.7.6",

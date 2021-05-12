@@ -9,6 +9,10 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
 
 [https://ryanatkn.github.io/ear-sharpener](https://ryanatkn.github.io/ear-sharpener)
 
+> note:
+> [the piano sounds are **out of tune**](https://github.com/ryanatkn/ear-sharpener/issues/2),
+> so don't play it too long
+
 ## Tech notes
 - Made with TypeScript, React, Redux, Immutable.js, React Router, PostCSS, Mocha, Chai, Sinon,
   Enzyme, Webpack, and the [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension).
@@ -16,9 +20,9 @@ your [relative pitch](https://en.wikipedia.org/wiki/Relative_pitch).
   game [here on Reddit](https://www.reddit.com/r/typescript/comments/4oa3gz/a_summary_of_my_experience_working_with/).
 - Redux actions are type safe in reducers using the discriminated union types
   available in the pre-2.0 TypeScript nightly.
-  The actions are defined in [`src/types.ts`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/types.ts).
+  The actions are defined in [`src/types.ts`](https://github.com/ryanatkn/ear-sharpener/blob/main/src/types.ts).
   The old ununsed hacky action implementation is in
-  [`src/utils/actions`](https://github.com/ryanatkn/ear-sharpener/blob/master/src/utils/actions/index.ts).
+  [`src/utils/actions`](https://github.com/ryanatkn/ear-sharpener/blob/main/src/utils/actions/index.ts).
 - Friction between Redux and the needs of this game:
     - There's a lot of complexity in the `gameActions` to get the desired UX.
       The four main sources of complexity include time-sequenced actions and side effects,
@@ -82,4 +86,5 @@ at [freesound.org](https://www.freesound.org/search/?q=piano&f=grouping_pack%3A%
 (public domain license) Transformed with Audacity into 3 second mp3s that fade out.
 
 ## License
-MIT
+
+public domain ([The Unlicense](license))
